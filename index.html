@@ -1,12 +1,100 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cyber Class Site</title>
-  </head>
-  <body>
-    <h1>Cyber Class Site</h1>
-    <p>This is my GitHub Pages website for class.</p>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home — CYBR 487 — Project 1: Network Analyzer</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script defer src="assets/nav.js"></script>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" aria-label="Site navigation">
+  <div class="sidebar__title">CYBR 487</div>
+  <div class="sidebar__subtitle">Project 1 Docs</div>
+  <ul class="sidebar__list">
+    <li><a href="index.html" data-nav="home">Home</a></li>
+    <li><a href="pages/setup.html" data-nav="setup">Setup</a></li>
+    <li><a href="pages/lab-1.html" data-nav="lab1">Milestone: Lab 1</a></li>
+    <li><a href="pages/policies.html" data-nav="policies">Policies</a></li>
+    <li><a href="pages/dev.html" data-nav="dev">Development</a></li>
+  </ul>
+  <div class="sidebar__small">
+    <div><strong>Live site:</strong> <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></div>
+  </div>
+</nav>
+  <main class="content" id="main">
+    <section class="dochead" aria-label="Document header">
+  <div class="dochead__title">CYBR 487 — Project 1: Network Analyzer</div>
+  <div class="dochead__meta">
+    <div>CYBR 487 Secure Software Design • Winter 2026</div>
+    <div>Lab 1 due: Jan 14, 2026</div>
+  </div>
+  <table class="meta-table" role="table" aria-label="Metadata">
+    <tbody>
+      <tr><th scope="row">Authors</th><td>Calvin Ruch • Kyle Costlow</td></tr>
+      <tr><th scope="row">Documentation</th><td><a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td></tr>
+      <tr><th scope="row">Scope note</th><td>Scanning is intended only for networks you own or have explicit permission to test.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h1>Overview</h1>
+  <p>
+    This site documents our CYBR 487 Project 1: a network analyzer. It is designed to feel like an
+    academic handout: clear sectioning, predictable spacing, and quick verification checklists.
+  </p>
+
+  <div class="callout callout--note">
+    <div class="callout__title">README is authoritative</div>
+    <div class="callout__body">
+      Project decisions (setup commands, hardware assumptions, AI stance, coding style) come from the repository README.
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Contents</h2>
+  <ol class="contents">
+    <li><a href="pages/setup.html">Setup</a> — hardware requirements + environment setup (automated and manual)</li>
+    <li><a href="pages/lab-1.html">Milestone: Lab 1</a> — requirements traceability + “how to check quickly”</li>
+    <li><a href="pages/policies.html">Policies</a> — scanning ethics/scope + AI stance (as stated in README)</li>
+    <li><a href="pages/dev.html">Development</a> — workflow (issues/PRs), testing approach, coding style</li>
+  </ol>
+</section>
+
+<section class="section">
+  <h2>Quick verification</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Instructor check</th>
+        <th>Where to look</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Docs are reachable publicly</td>
+        <td>This site: <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td>
+      </tr>
+      <tr>
+        <td>Setup instructions exist</td>
+        <td><a href="pages/setup.html">Setup</a> + README</td>
+      </tr>
+      <tr>
+        <td>Lab 1 checklist mapped to deliverables</td>
+        <td><a href="pages/lab-1.html">Milestone: Lab 1</a></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+    <footer class="footer">
+      <div class="footer__rule"></div>
+      <div class="footer__meta">CYBR 487 Secure Software Design • Winter 2026 • January 8, 2026</div>
+    </footer>
+  </main>
+</div>
+<script>window.__ACTIVE_NAV__ = "home";</script>
+</body>
 </html>

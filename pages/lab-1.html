@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab 1 — CYBR 487 — Project 1: Network Analyzer</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script defer src="../assets/nav.js"></script>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" aria-label="Site navigation">
+  <div class="sidebar__title">CYBR 487</div>
+  <div class="sidebar__subtitle">Project 1 Docs</div>
+  <ul class="sidebar__list">
+    <li><a href="../index.html" data-nav="home">Home</a></li>
+    <li><a href="setup.html" data-nav="setup">Setup</a></li>
+    <li><a href="lab-1.html" data-nav="lab1">Milestone: Lab 1</a></li>
+    <li><a href="policies.html" data-nav="policies">Policies</a></li>
+    <li><a href="dev.html" data-nav="dev">Development</a></li>
+  </ul>
+  <div class="sidebar__small">
+    <div><strong>Live site:</strong> <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></div>
+  </div>
+</nav>
+  <main class="content" id="main">
+    <section class="dochead" aria-label="Document header">
+  <div class="dochead__title">CYBR 487 — Project 1: Network Analyzer</div>
+  <div class="dochead__meta">
+    <div>CYBR 487 Secure Software Design • Winter 2026</div>
+    <div>Lab 1 due: Jan 14, 2026</div>
+  </div>
+  <table class="meta-table" role="table" aria-label="Metadata">
+    <tbody>
+      <tr><th scope="row">Authors</th><td>Calvin Ruch • Kyle Costlow</td></tr>
+      <tr><th scope="row">Documentation</th><td><a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td></tr>
+      <tr><th scope="row">Scope note</th><td>Scanning is intended only for networks you own or have explicit permission to test.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h1>Milestone: Lab 1</h1>
+  <p>
+    Lab 1 establishes the framework for our network analyzer: CIDR scanning, CLI flags, STDOUT reporting,
+    unit tests, collaboration workflow, and public documentation.
+  </p>
+
+  <h2>Lab 1 checklist → traceability</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Checklist item</th>
+        <th>Repo deliverable</th>
+        <th>Docs page</th>
+        <th>Verification (quick check)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Scanning</td>
+        <td>Scan a permitted CIDR network</td>
+        <td><a href="policies.html">Policies</a></td>
+        <td>Run CLI on permitted CIDR and see discovered hosts in STDOUT</td>
+      </tr>
+      <tr>
+        <td>Command line input</td>
+        <td>Flags-based CLI interface</td>
+        <td>This page</td>
+        <td><code>--help</code> prints usage and flags</td>
+      </tr>
+      <tr>
+        <td>Print to standard out</td>
+        <td>Readable report printed to STDOUT</td>
+        <td>This page</td>
+        <td>Run and observe formatted STDOUT output</td>
+      </tr>
+      <tr>
+        <td>Unit tests</td>
+        <td><code>tests/</code> directory + runnable tests</td>
+        <td><a href="dev.html">Development</a></td>
+        <td><code>python3 -m unittest …</code> exits 0</td>
+      </tr>
+      <tr>
+        <td>Pull requests</td>
+        <td>PR history with reviews/comments</td>
+        <td><a href="dev.html">Development</a></td>
+        <td>Instructor can view PRs in GitHub</td>
+      </tr>
+      <tr>
+        <td>README in repo</td>
+        <td>README.md includes description + checkout/run</td>
+        <td><a href="setup.html">Setup</a></td>
+        <td>Follow README steps on Linux and run baseline program</td>
+      </tr>
+      <tr>
+        <td>Code style visible</td>
+        <td>Style guidance documented (README)</td>
+        <td><a href="dev.html">Development</a></td>
+        <td>Style note exists and code matches</td>
+      </tr>
+      <tr>
+        <td>Environment setup in readme</td>
+        <td>venv + requirements.txt documented</td>
+        <td><a href="setup.html">Setup</a></td>
+        <td>Instructor can set up environment from README</td>
+      </tr>
+      <tr>
+        <td>Documentation site up</td>
+        <td>GitHub Pages site is public</td>
+        <td>Home</td>
+        <td>Open <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td>
+      </tr>
+      <tr>
+        <td>License in repo</td>
+        <td><code>LICENSE</code> file in repo root</td>
+        <td>Home (optional)</td>
+        <td>LICENSE file exists</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Requirement → Implementation → Verification</h2>
+  <div class="tri">
+    <div class="tri__col">
+      <h3>Requirement</h3>
+      <ul>
+        <li>Scan a given network, given as CIDR notation</li>
+        <li>Take command line input using flags</li>
+        <li>Generate a report (STDOUT)</li>
+      </ul>
+    </div>
+    <div class="tri__col">
+      <h3>Implementation</h3>
+      <ul>
+        <li>CLI parses flags + validates CIDR</li>
+        <li>Scanner runs only within authorized scope</li>
+        <li>Reporter prints stable, readable STDOUT output</li>
+      </ul>
+    </div>
+    <div class="tri__col">
+      <h3>Verification</h3>
+      <ul>
+        <li><code>--help</code> shows flags</li>
+        <li>Permitted CIDR produces expected host list</li>
+        <li>Unit tests cover parsing + formatting</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="muted">Checklist and requirements are from the Lab 1 handout; setup details mirror README.</p>
+</section>
+    <footer class="footer">
+      <div class="footer__rule"></div>
+      <div class="footer__meta">CYBR 487 Secure Software Design • Winter 2026 • January 8, 2026</div>
+    </footer>
+  </main>
+</div>
+<script>window.__ACTIVE_NAV__ = "lab1";</script>
+</body>
+</html>

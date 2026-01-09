@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Development — CYBR 487 — Project 1: Network Analyzer</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script defer src="../assets/nav.js"></script>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar" aria-label="Site navigation">
+  <div class="sidebar__title">CYBR 487</div>
+  <div class="sidebar__subtitle">Project 1 Docs</div>
+  <ul class="sidebar__list">
+    <li><a href="../index.html" data-nav="home">Home</a></li>
+    <li><a href="setup.html" data-nav="setup">Setup</a></li>
+    <li><a href="lab-1.html" data-nav="lab1">Milestone: Lab 1</a></li>
+    <li><a href="policies.html" data-nav="policies">Policies</a></li>
+    <li><a href="dev.html" data-nav="dev">Development</a></li>
+  </ul>
+  <div class="sidebar__small">
+    <div><strong>Live site:</strong> <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></div>
+  </div>
+</nav>
+  <main class="content" id="main">
+    <section class="dochead" aria-label="Document header">
+  <div class="dochead__title">CYBR 487 — Project 1: Network Analyzer</div>
+  <div class="dochead__meta">
+    <div>CYBR 487 Secure Software Design • Winter 2026</div>
+    <div>Lab 1 due: Jan 14, 2026</div>
+  </div>
+  <table class="meta-table" role="table" aria-label="Metadata">
+    <tbody>
+      <tr><th scope="row">Authors</th><td>Calvin Ruch • Kyle Costlow</td></tr>
+      <tr><th scope="row">Documentation</th><td><a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td></tr>
+      <tr><th scope="row">Scope note</th><td>Scanning is intended only for networks you own or have explicit permission to test.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h1>Development</h1>
+
+  <h2>Collaboration workflow</h2>
+  <ul>
+    <li>Use GitHub <strong>Issues</strong> to track work and assign tasks.</li>
+    <li>Use <strong>Pull Requests</strong> for collaboration and review before merging.</li>
+  </ul>
+
+  <h2>Testing</h2>
+  <p>Lab 1 requires unit tests. If no framework is selected yet, use built-in <code>unittest</code>:</p>
+  <pre><code class="language-bash">python3 -m unittest discover -s tests -p "test_*.py"</code></pre>
+  <p class="muted">If you later standardize on pytest, update this page (and README if desired).</p>
+
+  <h2>Coding style</h2>
+  <ul>
+    <li><strong>pep8</strong></li>
+    <li><strong>4 spaces</strong>, no tabs</li>
+  </ul>
+  <p class="muted">Taken directly from the README’s coding style note.</p>
+</section>
+    <footer class="footer">
+      <div class="footer__rule"></div>
+      <div class="footer__meta">CYBR 487 Secure Software Design • Winter 2026 • January 8, 2026</div>
+    </footer>
+  </main>
+</div>
+<script>window.__ACTIVE_NAV__ = "dev";</script>
+</body>
+</html>
