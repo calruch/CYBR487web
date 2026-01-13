@@ -1,12 +1,12 @@
 :root{
-  --bg:#fff;
-  --ink:#111;
-  --muted:#555;
-  --rule:#d0d0d0;
-  --panel:#f7f7f7;
-  --panel2:#fbfbfb;
-  --accent:#1a4a9f;
-  --warn:#b45309;
+  --bg:#000000;
+  --ink:#FFFFFF;
+  --muted:#CFCFCF;
+  --rule:#2A2A2A;
+  --panel:#050505;
+  --panel2:#0A0A0A;
+  --accent:#B7142E;
+  --warn:#B7142E;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -24,6 +24,8 @@ body{
 
 a{color:var(--accent); text-decoration:none;}
 a:hover{text-decoration:underline;}
+
+.sidebar__list a:hover{background:rgba(183, 20, 46, 0.10);}
 
 .layout{
   display:grid;
@@ -64,8 +66,8 @@ a:hover{text-decoration:underline;}
   font-size:14px;
 }
 .sidebar__list a[aria-current="page"]{
-  background:#e9eefb;
-  outline:1px solid #d6def7;
+  background:rgba(183, 20, 46, 0.18);
+  outline:1px solid rgba(183, 20, 46, 0.45);
 }
 
 .sidebar__small{
@@ -86,6 +88,27 @@ a:hover{text-decoration:underline;}
   background:var(--panel);
   padding:16px;
   border-radius:10px;
+  position:relative;
+  padding-right:260px;
+}
+
+.dochead__logo{
+  position:absolute;
+  right:18px;
+  top:-100px;
+  height:300px;
+  width:auto;
+  /* White outline around the non-transparent pixels (works with transparent logo images). */
+  filter:
+    drop-shadow(1px 0 0 #ffffff)
+    drop-shadow(-1px 0 0 #ffffff)
+    drop-shadow(0 1px 0 #ffffff)
+    drop-shadow(0 -1px 0 #ffffff)
+    drop-shadow(1px 1px 0 #ffffff)
+    drop-shadow(-1px -1px 0 #ffffff)
+    drop-shadow(1px -1px 0 #ffffff)
+    drop-shadow(-1px 1px 0 #ffffff)
+    drop-shadow(0 0 5px rgba(255,255,255,.35));
 }
 .dochead__title{
   font-family:var(--sans);
@@ -114,7 +137,7 @@ a:hover{text-decoration:underline;}
 .meta-table th{
   width:180px;
   text-align:left;
-  color:#222;
+  color:var(--ink);
 }
 
 .section{margin-top:18px;}
@@ -133,7 +156,7 @@ h3{font-size:15px; margin:16px 0 8px;}
   font-size:13px;
 }
 .table th,.table td{border:1px solid var(--rule); padding:9px 10px; vertical-align:top;}
-.table th{background:#f0f0f0; font-weight:700;}
+.table th{background:#111111; font-weight:700;}
 
 .contents{padding-left:22px;}
 
@@ -143,14 +166,14 @@ pre{
   padding:12px 14px;
   border-radius:10px;
   overflow:auto;
-  border:1px solid #121a33;
+  border:1px solid #2A2A2A;
 }
 code{font-family:var(--mono); font-size:.95em;}
 pre code{font-size:13px;}
 
 .callout{
   border:1px solid var(--rule);
-  background:#fff;
+  background:var(--panel2);
   border-left:6px solid var(--accent);
   padding:10px 12px;
   border-radius:10px;
@@ -191,4 +214,69 @@ pre code{font-size:13px;}
   .content{max-width:none; padding:0;}
   a{color:#000; text-decoration:underline;}
   pre{white-space:pre-wrap;}
+}
+
+/* Sidebar logo: drop-in school mark with thick white outline.
+   Replace the image file at assets/images/ewu-logo.webp if needed. */
+.sidebar__logoWrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:10px 0 14px;
+}
+.sidebar__logo{
+  width:170px;
+  height:auto;
+  display:block;
+  padding:10px;
+  background:#000;
+  border:6px solid #fff;
+  border-radius:14px;
+  /* Extra outline + soft glow to match the "thick white outline" look */
+  box-shadow: 0 0 0 3px #fff, 0 0 18px rgba(255,255,255,0.18);
+}
+
+/* Transcript formatting (AI Usage transcript pages) */
+.chatlog{margin-top:10px;}
+.chatturn{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.03);
+  border-radius:10px;
+  padding:12px 12px 10px;
+  margin:12px 0;
+  border-left:6px solid var(--accent);
+}
+.chatturn--assistant{
+  border-left-color:#ffffff;
+}
+.chatturn__hdr{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:10px;
+  font-family:var(--sans);
+  margin-bottom:8px;
+}
+.chatturn__role{
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+.chatturn__meta{
+  color:var(--muted);
+  font-size:12px;
+}
+.chatturn__text{
+  margin:0;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.12);
+}
+.chatturn__attachments{
+  margin-top:10px;
+  padding-top:8px;
+  border-top:1px dashed rgba(255,255,255,.18);
+  font-family:var(--sans);
+  font-size:12px;
+  color:var(--muted);
 }

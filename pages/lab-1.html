@@ -12,11 +12,12 @@
   <nav class="sidebar" aria-label="Site navigation">
   <div class="sidebar__title">CYBR 487</div>
   <div class="sidebar__subtitle">Project 1 Docs</div>
-  <ul class="sidebar__list">
+<ul class="sidebar__list">
     <li><a href="../index.html" data-nav="home">Home</a></li>
     <li><a href="setup.html" data-nav="setup">Setup</a></li>
     <li><a href="lab-1.html" data-nav="lab1">Milestone: Lab 1</a></li>
     <li><a href="policies.html" data-nav="policies">Policies</a></li>
+    <li><a href="ai-usage.html" data-nav="ai">AI Usage</a></li>
     <li><a href="dev.html" data-nav="dev">Development</a></li>
   </ul>
   <div class="sidebar__small">
@@ -28,14 +29,15 @@
   <div class="dochead__title">CYBR 487 — Project 1: Network Analyzer</div>
   <div class="dochead__meta">
     <div>CYBR 487 Secure Software Design • Winter 2026</div>
-    <div>Lab 1 due: Jan 14, 2026</div>
+    
+  <img class="dochead__logo" src="../assets/images/ewu-logo.webp" alt="Eastern Washington University logo" />
+<div>Lab 1 due: Jan 14, 2026</div>
   </div>
   <table class="meta-table" role="table" aria-label="Metadata">
     <tbody>
       <tr><th scope="row">Authors</th><td>Calvin Ruch • Kyle Costlow</td></tr>
       <tr><th scope="row">Documentation</th><td><a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td></tr>
-      <tr><th scope="row">Scope note</th><td>Scanning is intended only for networks you own or have explicit permission to test.</td></tr>
-    </tbody>
+</tbody>
   </table>
 </section>
 
@@ -59,9 +61,9 @@
     <tbody>
       <tr>
         <td>Scanning</td>
-        <td>Scan a permitted CIDR network</td>
-        <td><a href="policies.html">Policies</a></td>
-        <td>Run CLI on permitted CIDR and see discovered hosts in STDOUT</td>
+        <td>Scan a target CIDR network</td>
+        <td>This page</td>
+        <td>Run CLI on target CIDR and see discovered hosts in STDOUT</td>
       </tr>
       <tr>
         <td>Command line input</td>
@@ -134,7 +136,7 @@
       <h3>Implementation</h3>
       <ul>
         <li>CLI parses flags + validates CIDR</li>
-        <li>Scanner runs only within authorized scope</li>
+        <li>Scanner operates on the provided CIDR input</li>
         <li>Reporter prints stable, readable STDOUT output</li>
       </ul>
     </div>
@@ -142,7 +144,7 @@
       <h3>Verification</h3>
       <ul>
         <li><code>--help</code> shows flags</li>
-        <li>Permitted CIDR produces expected host list</li>
+        <li>Target CIDR produces expected host list</li>
         <li>Unit tests cover parsing + formatting</li>
       </ul>
     </div>

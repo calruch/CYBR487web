@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Development — CYBR 487 — Project 1: Network Analyzer</title>
+  <title>AI Usage — CYBR 487 — Project 1: Network Analyzer</title>
   <link rel="stylesheet" href="../assets/style.css" />
   <script defer src="../assets/nav.js"></script>
 </head>
@@ -37,37 +37,51 @@
     <tbody>
       <tr><th scope="row">Authors</th><td>Calvin Ruch • Kyle Costlow</td></tr>
       <tr><th scope="row">Documentation</th><td><a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td></tr>
-</tbody>
+    </tbody>
   </table>
 </section>
 
 <section class="section">
-  <h1>Development</h1>
+  <h1>AI Usage</h1>
+  <p class="muted">
+    This page provides a lightweight ledger of AI-assisted work and links to dedicated transcript pages.
+  </p>
 
-  <h2>Collaboration workflow</h2>
-  <ul>
-    <li>Use GitHub <strong>Issues</strong> to track work and assign tasks.</li>
-    <li>Use <strong>Pull Requests</strong> for collaboration and review before merging.</li>
-  </ul>
+  <!-- How to add a new ledger row:
+       Edit: /assets/ai-ledger.js
+       Add an object to AI_LEDGER with transcriptHref pointing at a new page under pages/transcripts/.
+       Then copy: pages/transcripts/_template.html → create your new transcript page. -->
 
-  <h2>Testing</h2>
-  <p>Lab 1 requires unit tests. If no framework is selected yet, use built-in <code>unittest</code>:</p>
-  <pre><code class="language-bash">python3 -m unittest discover -s tests -p "test_*.py"</code></pre>
-  <p class="muted">If you later standardize on pytest, update this page (and README if desired).</p>
+  <h2>Ledger</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Model Used</th>
+        <th>What Was Affected</th>
+        <th>Conversation Summary</th>
+        <th>Transcript Link</th>
+      </tr>
+    </thead>
+    <tbody id="ledgerBody"></tbody>
+  </table>
 
-  <h2>Coding style</h2>
-  <ul>
-    <li><strong>pep8</strong></li>
-    <li><strong>4 spaces</strong>, no tabs</li>
-  </ul>
-  <p class="muted">Taken directly from the README’s coding style note.</p>
+  <div class="callout callout--note">
+    <div class="callout__title">Where to edit</div>
+    <div class="callout__body">
+      Add ledger entries in <code>assets/ai-ledger.js</code>. Add transcript pages in <code>pages/transcripts/</code>.
+    </div>
+  </div>
 </section>
+
+<script src="../assets/ai-ledger.js"></script>
+<script src="../assets/ai-usage.js"></script>
     <footer class="footer">
       <div class="footer__rule"></div>
       <div class="footer__meta">CYBR 487 Secure Software Design • Winter 2026 • January 8, 2026</div>
     </footer>
   </main>
 </div>
-<script>window.__ACTIVE_NAV__ = "dev";</script>
+<script>window.__ACTIVE_NAV__ = "ai";</script>
 </body>
 </html>
