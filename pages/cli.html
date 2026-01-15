@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Usage — Network Analyzer</title>
+  <title>CLI Reference — Network Analyzer</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
 <body>
@@ -22,7 +22,7 @@
         <div class="nav__groupLabel">User Guide</div>
         <a class="nav__link " href="../pages/getting-started.html">Getting Started</a>
         <a class="nav__link " href="../pages/usage.html">Usage</a>
-        <a class="nav__link " href="../pages/cli.html">CLI Reference</a>
+        <a class="nav__link is-active" href="../pages/cli.html">CLI Reference</a>
 
         <div class="nav__groupLabel">Internals</div>
         <a class="nav__link " href="../pages/how-it-works.html">How It Works</a>
@@ -30,7 +30,7 @@
         <a class="nav__link " href="../pages/troubleshooting.html">Troubleshooting & Limitations</a>
 
         <div class="nav__groupLabel">Policies</div>
-        <a class="nav__link is-active" href="../pages/ai-usage.html">AI Usage</a>
+        <a class="nav__link " href="../pages/ai-usage.html">AI Usage</a>
       </nav>
     </aside>
     
@@ -53,40 +53,56 @@
     
       <div class="content">
         
-<h2>AI Usage</h2>
-<p>
-This page provides a lightweight ledger of AI-assisted work and links to dedicated transcript pages.
-</p>
+<h2>Synopsis</h2>
+<pre><code>sudo python3 src/main.py --network &lt;CIDR&gt; [--timeout SECONDS] [--ports PORTS] [--verbose]</code></pre>
 
-<h2>Ledger</h2>
-<table class="table" id="ai-ledger">
+<h2>Flags</h2>
+<table class="table">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Model Used</th>
-      <th>What Was Affected</th>
-      <th>Conversation Summary</th>
-      <th>Transcript Link</th>
+      <th>Flag</th>
+      <th>Description</th>
+      <th>Default</th>
+      <th>Examples</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Rows inserted by assets/ai-ledger.js -->
+    <tr>
+      <td><code>-n</code>, <code>--network</code> <strong>(required)</strong></td>
+      <td>Target network in CIDR notation.</td>
+      <td>—</td>
+      <td><code>-n 192.168.0.1/24</code></td>
+    </tr>
+    <tr>
+      <td><code>-t</code>, <code>--timeout</code></td>
+      <td>Receive timeout (seconds) for ICMP responses. Invalid values fall back to default.</td>
+      <td><code>30</code></td>
+      <td><code>-t 50</code></td>
+    </tr>
+    <tr>
+      <td><code>-p</code>, <code>--ports</code></td>
+      <td>
+        Port selection input (accepted formats below). Currently not used by the scanner logic.
+        <span class="badge badge--planned">planned</span>
+      </td>
+      <td><code>None</code></td>
+      <td><code>-p 1-1024</code> / <code>-p 22</code> / <code>-p 22,80,443</code></td>
+    </tr>
+    <tr>
+      <td><code>-v</code>, <code>--verbose</code></td>
+      <td>Show verbose scan progress.</td>
+      <td><code>false</code></td>
+      <td><code>-v</code></td>
+    </tr>
   </tbody>
 </table>
 
-<div class="callout">
-  <div class="callout__title">Where to edit</div>
-  <div class="callout__body">
-    Add ledger entries in <code>assets/ai-ledger.js</code>.
-    Add transcript pages in <code>pages/transcripts/</code>.
-  </div>
-</div>
-
-<script src="../assets/ai-ledger.js"></script>
-<script>
-  // Renders the ledger table from assets/ai-ledger.js
-  renderAiLedger("ai-ledger");
-</script>
+<h2>Ports input formats</h2>
+<ul>
+  <li><strong>Range:</strong> <code>1-1024</code></li>
+  <li><strong>Comma list:</strong> <code>22,80,443</code></li>
+  <li><strong>Single port:</strong> <code>22</code></li>
+</ul>
 
       </div>
       <footer class="footer">

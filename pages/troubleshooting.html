@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Usage — Network Analyzer</title>
+  <title>Troubleshooting & Limitations — Network Analyzer</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
 <body>
@@ -27,10 +27,10 @@
         <div class="nav__groupLabel">Internals</div>
         <a class="nav__link " href="../pages/how-it-works.html">How It Works</a>
         <a class="nav__link " href="../pages/developer-guide.html">Developer Guide</a>
-        <a class="nav__link " href="../pages/troubleshooting.html">Troubleshooting & Limitations</a>
+        <a class="nav__link is-active" href="../pages/troubleshooting.html">Troubleshooting & Limitations</a>
 
         <div class="nav__groupLabel">Policies</div>
-        <a class="nav__link is-active" href="../pages/ai-usage.html">AI Usage</a>
+        <a class="nav__link " href="../pages/ai-usage.html">AI Usage</a>
       </nav>
     </aside>
     
@@ -53,40 +53,32 @@
     
       <div class="content">
         
-<h2>AI Usage</h2>
+<h2>Common issues</h2>
+
+<h3>Scapy permissions</h3>
 <p>
-This page provides a lightweight ledger of AI-assisted work and links to dedicated transcript pages.
+If Scapy fails to send packets or ARP discovery returns nothing, try running with <code>sudo</code>.
+Raw packet operations often require elevated privileges.
 </p>
 
-<h2>Ledger</h2>
-<table class="table" id="ai-ledger">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Model Used</th>
-      <th>What Was Affected</th>
-      <th>Conversation Summary</th>
-      <th>Transcript Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Rows inserted by assets/ai-ledger.js -->
-  </tbody>
-</table>
+<h3>ARP discovery only works on the local network</h3>
+<p>
+ARP is link-layer discovery. It generally will not find devices beyond your router.
+If you scan a remote subnet, it may appear empty even if hosts exist.
+</p>
 
-<div class="callout">
-  <div class="callout__title">Where to edit</div>
-  <div class="callout__body">
-    Add ledger entries in <code>assets/ai-ledger.js</code>.
-    Add transcript pages in <code>pages/transcripts/</code>.
-  </div>
-</div>
+<h3>Virtual machines and multiple adapters</h3>
+<p>
+VMs often have NAT + bridged adapters. ARP visibility depends on which adapter is used and how the VM is configured.
+If you see inconsistent discovery results, verify your interface/network mode. In VirtualBox, your bridged adaptor should be connected to eth0.
+</p>
 
-<script src="../assets/ai-ledger.js"></script>
-<script>
-  // Renders the ledger table from assets/ai-ledger.js
-  renderAiLedger("ai-ledger");
-</script>
+<h2>Limitations</h2>
+<ul>
+  <li><strong>OS guessing is heuristic:</strong> IPID behavior varies and is not a definitive fingerprint.</li>
+  <li><strong>Port scanning is not implemented:</strong> the <code>--ports</code> flag is parsed but not used for probing.</li>
+  <li><strong>Scan time scales with hosts:</strong> ICMP probing sends multiple packets per host.</li>
+</ul>
 
       </div>
       <footer class="footer">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Usage — Network Analyzer</title>
+  <title>Developer Guide — Network Analyzer</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
 <body>
@@ -26,11 +26,11 @@
 
         <div class="nav__groupLabel">Internals</div>
         <a class="nav__link " href="../pages/how-it-works.html">How It Works</a>
-        <a class="nav__link " href="../pages/developer-guide.html">Developer Guide</a>
+        <a class="nav__link is-active" href="../pages/developer-guide.html">Developer Guide</a>
         <a class="nav__link " href="../pages/troubleshooting.html">Troubleshooting & Limitations</a>
 
         <div class="nav__groupLabel">Policies</div>
-        <a class="nav__link is-active" href="../pages/ai-usage.html">AI Usage</a>
+        <a class="nav__link " href="../pages/ai-usage.html">AI Usage</a>
       </nav>
     </aside>
     
@@ -53,40 +53,48 @@
     
       <div class="content">
         
-<h2>AI Usage</h2>
-<p>
-This page provides a lightweight ledger of AI-assisted work and links to dedicated transcript pages.
-</p>
+<h2>Project layout</h2>
+<p>Important files/modules:</p>
 
-<h2>Ledger</h2>
-<table class="table" id="ai-ledger">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Model Used</th>
-      <th>What Was Affected</th>
-      <th>Conversation Summary</th>
-      <th>Transcript Link</th>
-    </tr>
-  </thead>
+<table class="table">
+  <thead><tr><th>Path</th><th>Purpose</th></tr></thead>
   <tbody>
-    <!-- Rows inserted by assets/ai-ledger.js -->
+    <tr><td><code>src/main.py</code></td><td>Entry point. Parses args, runs ARP discovery, scans each host, prints reports.</td></tr>
+    <tr><td><code>src/networkScanner.py</code></td><td>ARP scan + ICMP probing + IPID-based OS heuristic.</td></tr>
+    <tr><td><code>src/argParser.py</code></td><td>CLI flag parsing and validation.</td></tr>
+    <tr><td><code>src/generateReport.py</code></td><td>STDOUT report formatting (“boxed” output).</td></tr>
+    <tr><td><code>runApplication.sh</code></td><td>Automation script for venv setup + running a sample scan.</td></tr>
   </tbody>
 </table>
 
-<div class="callout">
-  <div class="callout__title">Where to edit</div>
-  <div class="callout__body">
-    Add ledger entries in <code>assets/ai-ledger.js</code>.
-    Add transcript pages in <code>pages/transcripts/</code>.
-  </div>
-</div>
+<h2>Coding style</h2>
+<ul>
+  <li>PEP8 formatting (<strong>4 spaces</strong>, no tabs)</li>
+  <li>Docstrings after every <code>def</code></li>
+</ul>
 
-<script src="../assets/ai-ledger.js"></script>
-<script>
-  // Renders the ledger table from assets/ai-ledger.js
-  renderAiLedger("ai-ledger");
-</script>
+<h2>Adding features</h2>
+<p>
+A few common extension points:
+</p>
+<ul>
+  <li><strong>Port scanning:</strong> the CLI already accepts <code>--ports</code>. You can implement actual probing using the parsed list.</li>
+  <li><strong>Richer output:</strong> expand <code>generateReport.py</code> to support alternate formats (still keeping STDOUT readable).</li>
+  <li><strong>Better OS heuristics:</strong> tune the IPID checks or add additional signals.</li>
+</ul>
+
+<h2>Running tests</h2>
+<p>
+Unit tests are written with Python’s <code>unittest</code>.
+From the repository root:
+</p>
+<pre><code>python3 -m unittest</code></pre>
+
+<h2>AI stance</h2>
+<p>
+AI usage is allowed in limited ways (documentation, planning, small isolated code lines, and troubleshooting),
+and all usage is disclosed in the <a href="ai-usage.html">AI Usage</a> ledger.
+</p>
 
       </div>
       <footer class="footer">

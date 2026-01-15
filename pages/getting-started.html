@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Usage — Network Analyzer</title>
+  <title>Getting Started — Network Analyzer</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
 <body>
@@ -20,7 +20,7 @@
         <a class="nav__link " href="../index.html">Home</a>
 
         <div class="nav__groupLabel">User Guide</div>
-        <a class="nav__link " href="../pages/getting-started.html">Getting Started</a>
+        <a class="nav__link is-active" href="../pages/getting-started.html">Getting Started</a>
         <a class="nav__link " href="../pages/usage.html">Usage</a>
         <a class="nav__link " href="../pages/cli.html">CLI Reference</a>
 
@@ -30,7 +30,7 @@
         <a class="nav__link " href="../pages/troubleshooting.html">Troubleshooting & Limitations</a>
 
         <div class="nav__groupLabel">Policies</div>
-        <a class="nav__link is-active" href="../pages/ai-usage.html">AI Usage</a>
+        <a class="nav__link " href="../pages/ai-usage.html">AI Usage</a>
       </nav>
     </aside>
     
@@ -52,41 +52,55 @@
       </header>
     
       <div class="content">
-        
-<h2>AI Usage</h2>
-<p>
-This page provides a lightweight ledger of AI-assisted work and links to dedicated transcript pages.
-</p>
-
-<h2>Ledger</h2>
-<table class="table" id="ai-ledger">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Model Used</th>
-      <th>What Was Affected</th>
-      <th>Conversation Summary</th>
-      <th>Transcript Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Rows inserted by assets/ai-ledger.js -->
-  </tbody>
-</table>
-
+   
 <div class="callout">
-  <div class="callout__title">Where to edit</div>
+  <div class="callout__title">Note</div>
   <div class="callout__body">
-    Add ledger entries in <code>assets/ai-ledger.js</code>.
-    Add transcript pages in <code>pages/transcripts/</code>.
+    This tool is intended for use on networks you own or have explicit permission to test.
   </div>
 </div>
 
-<script src="../assets/ai-ledger.js"></script>
-<script>
-  // Renders the ledger table from assets/ai-ledger.js
-  renderAiLedger("ai-ledger");
-</script>
+<h2>Prerequisites</h2>
+<table class="table">
+  <thead>
+    <tr><th>Requirement</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Linux-based OS</td><td>Required. WSL may work, but is not guaranteed.</td></tr>
+    <tr><td>Python 3</td><td>Uses a venv for isolation.</td></tr>
+    <tr><td>bash</td><td>Required if you want to use the automation script.</td></tr>
+    <tr><td>Privileges</td><td>Scapy typically needs <code>sudo</code> for raw packet operations.</td></tr>
+  </tbody>
+</table>
+
+<h2>Clone repository</h2>
+<p>Clone the project repository to your local machine:</p>
+<pre><code>git clone https://github.com/calruch/CYBR487project1.git
+cd CYBR487project1</code></pre>
+
+<h2>Install &amp; run (automated)</h2>
+<p>The automation script creates a venv, installs dependencies, and runs a sample scan:</p>
+<pre><code>chmod +x runApplication.sh
+sudo ./runApplication.sh</code></pre>
+
+<h2>Install &amp; run (manual)</h2>
+<p>If you prefer doing each step yourself:</p>
+<pre><code>python3 -m venv env
+source env/bin/activate
+pip install -r misc/requirements.txt
+
+# Example scan
+python3 src/main.py --network=192.168.0.1/24 --timeout=50 --verbose
+
+deactivate</code></pre>
+
+<h2>Dependencies</h2>
+<p>The scanner relies on:</p>
+<ul>
+  <li><code>scapy</code> for packet crafting/sending</li>
+  <li><code>argparse</code> for CLI parsing</li>
+  <li><code>ipaddress</code> for IP/CIDR helpers <span class="badge badge--planned">not implemented</span></li>
+</ul>
 
       </div>
       <footer class="footer">

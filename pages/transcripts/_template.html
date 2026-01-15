@@ -3,105 +3,91 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Transcript — TEMPLATE</title>
+  <title>Transcript Template — Network Analyzer</title>
   <link rel="stylesheet" href="../../assets/style.css" />
-  <script defer src="../../assets/nav.js"></script>
 </head>
 <body>
-<div class="layout">
-  <nav class="sidebar" aria-label="Site navigation">
-  <div class="sidebar__title">CYBR 487</div>
-  <div class="sidebar__subtitle">Project 1 Docs</div>
-<ul class="sidebar__list">
-    <li><a href="../../index.html" data-nav="home">Home</a></li>
-    <li><a href="../setup.html" data-nav="setup">Setup</a></li>
-    <li><a href="../lab-1.html" data-nav="lab1">Milestone: Lab 1</a></li>
-    <li><a href="../policies.html" data-nav="policies">Policies</a></li>
-    <li><a href="../ai-usage.html" data-nav="ai">AI Usage</a></li>
-    <li><a href="../dev.html" data-nav="dev">Development</a></li>
-  </ul>
-  <div class="sidebar__small">
-    <div><strong>Live site:</strong> <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></div>
-  </div>
-</nav>
-  <main class="content" id="main">
-    <section class="dochead" aria-label="Document header">
-  <div class="dochead__title">AI Transcript</div>
-  <div class="dochead__meta">
-    <div>Copy this file to create a new transcript page.</div>
-  
-  <img class="dochead__logo" src="../../assets/images/ewu-logo.webp" alt="Eastern Washington University logo" />
-</div>
-  <table class="meta-table" role="table" aria-label="Metadata">
-    <tbody>
-      <tr><th scope="row">Date</th><td>YYYY-MM-DD</td></tr>
-      <tr><th scope="row">Model Used</th><td>e.g., GPT-5.2 Thinking</td></tr>
-      <tr><th scope="row">What was affected</th><td>Short description</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<section class="section">
-  <h1>Transcript</h1>
-  <p class="muted">
-    Paste the conversation turns below in chronological order (your prompt, assistant response, your next prompt, etc.).
-    Keep each turn in its own block so it stays readable and easy to audit.
-  </p>
-
-  <div class="callout callout--note">
-    <div class="callout__title">How to add turns (copy/paste)</div>
-    <div class="callout__body">
-      Copy one of the <code>&lt;section class="chatturn ..."&gt;</code> blocks below and paste it at the bottom of the <code>.chatlog</code>.
-      Use <code>chatturn--user</code> for your prompts and <code>chatturn--assistant</code> for assistant replies.
-      If a prompt had attachments, list the filenames in the “Attachments” line (do not include the files themselves).
-    </div>
-  </div>
-
-  <div class="chatlog">
-    <!--
-      ADD NEW TURNS HERE (copy/paste a block and increment the id):
-
-      1) For a user prompt:
-         - use class="chatturn chatturn--user"
-         - fill in the date/time label
-         - paste your prompt text in the <pre> block
-         - optionally list attachments (filenames only)
-
-      2) For an assistant response:
-         - use class="chatturn chatturn--assistant"
-         - fill in the date/time label
-         - paste the assistant response in the <pre> block
-    -->
-
-    <section class="chatturn chatturn--user" id="turn-01">
-      <div class="chatturn__hdr">
-        <div class="chatturn__role">User</div>
-        <div class="chatturn__meta">YYYY-MM-DD HH:MM</div>
+  <div class="layout">
+    
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <div class="sidebar__title">Network Analyzer</div>
+        <div class="sidebar__subtitle">Project Documentation</div>
       </div>
-      <pre class="chatturn__text"><code>PASTE YOUR PROMPT HERE...</code></pre>
-      <div class="chatturn__attachments"><strong>Attachments:</strong> (none)</div>
-      <!-- If there were attachments, replace (none) with e.g.: Lab1.pdf; index.html screenshot -->
-    </section>
 
-    <section class="chatturn chatturn--assistant" id="turn-02">
-      <div class="chatturn__hdr">
-        <div class="chatturn__role">Assistant</div>
-        <div class="chatturn__meta">YYYY-MM-DD HH:MM</div>
-      </div>
-      <pre class="chatturn__text"><code>PASTE THE ASSISTANT RESPONSE HERE...</code></pre>
-    </section>
+      <nav class="nav">
+        <div class="nav__groupLabel">Overview</div>
+        <a class="nav__link " href="../index.html">Home</a>
 
-  </div>
+        <div class="nav__groupLabel">User Guide</div>
+        <a class="nav__link " href="../../pages/getting-started.html">Getting Started</a>
+        <a class="nav__link " href="../../pages/usage.html">Usage</a>
+        <a class="nav__link " href="../../pages/cli.html">CLI Reference</a>
 
-  <p class="muted">Return to <a href="../ai-usage.html">AI Usage</a>.</p>
-</section>
+        <div class="nav__groupLabel">Internals</div>
+        <a class="nav__link " href="../../pages/how-it-works.html">How It Works</a>
+        <a class="nav__link " href="../../pages/developer-guide.html">Developer Guide</a>
+        <a class="nav__link " href="../../pages/troubleshooting.html">Troubleshooting & Limitations</a>
 
-    <footer class="footer">
-      <div class="footer__rule"></div>
-      <div class="footer__meta">CYBR 487 Secure Software Design • Winter 2026</div>
-    </footer>
-  </main>
+        <div class="nav__groupLabel">Policies</div>
+        <a class="nav__link is-active" href="../../pages/ai-usage.html">AI Usage</a>
+      </nav>
+    </aside>
+    
+    <main class="main">
+      
+      <header class="dochead">
+        <h1 class="dochead__title">Network Analyzer</h1>
+        <p class="dochead__subtitle">
+          Host discovery & lightweight OS fingerprinting  using Scapy.
+        </p>
+
+        <table class="meta">
+          <tr><th>Authors</th><td>Calvin Ruch &bull; Kyle Costlow</td></tr>
+          <tr><th>Repository</th><td><code>calruch/CYBR487project1</code></td></tr>
+        </table>
+
+        <!-- Logo: outlined via CSS drop-shadows so it follows non-transparent pixels -->
+        <img class="dochead__logo" src="../../assets/images/ewu-logo.webp" alt="Eastern Washington University logo"/>
+      </header>
+    
+      <div class="content">
+        
+<h2>Transcript</h2>
+<p>
+Copy/paste your conversation below as alternating turns.
+Use the blocks exactly as shown so prompts vs responses are clearly separated.
+</p>
+
+<h3>Template</h3>
+<pre><code>&lt;div class="chatturn chatturn--user"&gt;
+  &lt;div class="chatturn__who"&gt;
+    &lt;div class="chatturn__label"&gt;User&lt;/div&gt;
+    &lt;div class="chatturn__meta"&gt;YYYY-MM-DD&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="chatturn__attachments"&gt;&lt;strong&gt;Attachments:&lt;/strong&gt; README.md, screenshot.png&lt;/div&gt;
+  &lt;div class="chatturn__content"&gt;Your prompt text here...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="chatturn chatturn--assistant"&gt;
+  &lt;div class="chatturn__who"&gt;
+    &lt;div class="chatturn__label"&gt;Assistant&lt;/div&gt;
+    &lt;div class="chatturn__meta"&gt;YYYY-MM-DD&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="chatturn__content"&gt;Assistant response here...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<h3>Conversation</h3>
+<div class="chatlog">
+  <!-- Paste chatturn blocks here -->
 </div>
-<script>window.__ACTIVE_NAV__ = "ai";</script>
+
+      </div>
+      <footer class="footer">
+        <div>Network Analyzer &bull; Documentation</div>
+      </footer>
+    </main>
+  </div>
+  <script src="../../assets/site.js"></script>
 </body>
 </html>

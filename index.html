@@ -3,100 +3,94 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home — CYBR 487 — Project 1: Network Analyzer</title>
+  <title>Network Analyzer — Documentation</title>
   <link rel="stylesheet" href="assets/style.css" />
-  <script defer src="assets/nav.js"></script>
 </head>
 <body>
-<div class="layout">
-  <nav class="sidebar" aria-label="Site navigation">
-  <div class="sidebar__title">CYBR 487</div>
-  <div class="sidebar__subtitle">Project 1 Docs</div>
-<ul class="sidebar__list">
-    <li><a href="index.html" data-nav="home">Home</a></li>
-    <li><a href="pages/setup.html" data-nav="setup">Setup</a></li>
-    <li><a href="pages/lab-1.html" data-nav="lab1">Milestone: Lab 1</a></li>
-    <li><a href="pages/policies.html" data-nav="policies">Policies</a></li>
-    <li><a href="pages/ai-usage.html" data-nav="ai">AI Usage</a></li>
-    <li><a href="pages/dev.html" data-nav="dev">Development</a></li>
-  </ul>
-  <div class="sidebar__small">
-    <div><strong>Live site:</strong> <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></div>
-  </div>
-</nav>
-  <main class="content" id="main">
-    <section class="dochead" aria-label="Document header">
-  <div class="dochead__title">CYBR 487 — Project 1: Network Analyzer</div>
-  <div class="dochead__meta">
-    <div>CYBR 487 Secure Software Design • Winter 2026</div>
+  <div class="layout">
     
-  <img class="dochead__logo" src="assets/images/ewu-logo.webp" alt="Eastern Washington University logo" />
-<div>Lab 1 due: Jan 14, 2026</div>
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <div class="sidebar__title">Network Analyzer</div>
+        <div class="sidebar__subtitle">Project Documentation</div>
+      </div>
+
+      <nav class="nav">
+        <div class="nav__groupLabel">Overview</div>
+        <a class="nav__link is-active" href="index.html">Home</a>
+
+        <div class="nav__groupLabel">User Guide</div>
+        <a class="nav__link " href="pages/getting-started.html">Getting Started</a>
+        <a class="nav__link " href="pages/usage.html">Usage</a>
+        <a class="nav__link " href="pages/cli.html">CLI Reference</a>
+
+        <div class="nav__groupLabel">Internals</div>
+        <a class="nav__link " href="pages/how-it-works.html">How It Works</a>
+        <a class="nav__link " href="pages/developer-guide.html">Developer Guide</a>
+        <a class="nav__link " href="pages/troubleshooting.html">Troubleshooting & Limitations</a>
+
+        <div class="nav__groupLabel">Policies</div>
+        <a class="nav__link " href="pages/ai-usage.html">AI Usage</a>
+      </nav>
+    </aside>
+    
+    <main class="main">
+      
+      <header class="dochead">
+        <h1 class="dochead__title">Network Analyzer</h1>
+        <p class="dochead__subtitle">
+          Host discovery & lightweight OS fingerprinting using Scapy.
+        </p>
+
+        <table class="meta">
+          <tr><th>Authors</th><td>Calvin Ruch &bull; Kyle Costlow</td></tr>
+          <tr><th>Repository</th><td><code>calruch/CYBR487project1</code></td></tr>
+        </table>
+
+        <!-- Logo: outlined via CSS drop-shadows so it follows non-transparent pixels -->
+        <img class="dochead__logo" src="assets/images/ewu-logo.webp" alt="Eastern Washington University logo"/>
+      </header>
+    
+      <div class="content">
+        
+<h2>Overview</h2>
+<p>
+This project is a lightweight network analyzer focused on two tasks:
+<strong>discovering live hosts</strong> on a local network (via ARP) and
+<strong>estimating the target OS</strong> using a simple IPID behavior heuristic.
+</p>
+
+<div class="callout">
+  <div class="callout__title">Quickstart</div>
+  <div class="callout__body">
+    <p>Clone the repo, then run the provided script:</p>
+    <pre><code>git clone git@github.com:calruch/CYBR487project1.git
+cd CYBR487project1
+chmod +x runApplication.sh
+sudo ./runApplication.sh</code></pre>
+    <p>This creates a virtual environment, installs dependencies, and runs a sample scan.</p>
   </div>
-  <table class="meta-table" role="table" aria-label="Metadata">
-    <tbody>
-      <tr><th scope="row">Authors</th><td>Calvin Ruch • Kyle Costlow</td></tr>
-      <tr><th scope="row">Documentation</th><td><a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td></tr>
-</tbody>
-  </table>
-</section>
-
-<section class="section">
-  <h1>Overview</h1>
-  <p>
-    This site documents our CYBR 487 Project 1: a network analyzer. It is designed to feel like an
-    academic handout: clear sectioning, predictable spacing, and quick verification checklists.
-  </p>
-
-  <div class="callout callout--note">
-    <div class="callout__title">README is authoritative</div>
-    <div class="callout__body">
-      Project decisions (setup commands, hardware assumptions, AI stance, coding style) come from the repository README.
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <h2>Contents</h2>
-  <ol class="contents">
-    <li><a href="pages/setup.html">Setup</a> — hardware requirements + environment setup (automated and manual)</li>
-    <li><a href="pages/lab-1.html">Milestone: Lab 1</a> — requirements traceability + “how to check quickly”</li>
-    <li><a href="pages/policies.html">Policies</a> — AI stance (as stated in README)</li>
-    <li><a href="pages/dev.html">Development</a> — workflow (issues/PRs), testing approach, coding style</li>
-  </ol>
-</section>
-
-<section class="section">
-  <h2>Quick verification</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Instructor check</th>
-        <th>Where to look</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Docs are reachable publicly</td>
-        <td>This site: <a href="https://calruch.github.io/CYBR487web/">https://calruch.github.io/CYBR487web/</a></td>
-      </tr>
-      <tr>
-        <td>Setup instructions exist</td>
-        <td><a href="pages/setup.html">Setup</a> + README</td>
-      </tr>
-      <tr>
-        <td>Lab 1 checklist mapped to deliverables</td>
-        <td><a href="pages/lab-1.html">Milestone: Lab 1</a></td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-    <footer class="footer">
-      <div class="footer__rule"></div>
-      <div class="footer__meta">CYBR 487 Secure Software Design • Winter 2026 • January 8, 2026</div>
-    </footer>
-  </main>
 </div>
-<script>window.__ACTIVE_NAV__ = "home";</script>
+
+<h2>What it does</h2>
+<ul>
+  <li><strong>Host discovery:</strong> ARP scan of a target network in CIDR notation.</li>
+  <li><strong>OS fingerprinting:</strong> Best guess based on IPID behavior.</li>
+  <li><strong>Report output:</strong> prints scan progress and a summary to STDOUT.</li>
+</ul>
+
+<h2>Next steps</h2>
+<p>
+Start with <a href="pages/getting-started.html">Getting Started</a>,
+then see <a href="pages/usage.html">Usage</a> and the full <a href="pages/cli.html">CLI Reference</a>.
+</p>
+
+      </div>
+      <footer class="footer">
+        <div>Network Analyzer &bull; Documentation</div>
+      </footer>
+    </main>
+  </div>
+  <script src="assets/site.js"></script>
 </body>
 </html>

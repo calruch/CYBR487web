@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Usage — Network Analyzer</title>
+  <title>Usage — Network Analyzer</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
 <body>
@@ -21,7 +21,7 @@
 
         <div class="nav__groupLabel">User Guide</div>
         <a class="nav__link " href="../pages/getting-started.html">Getting Started</a>
-        <a class="nav__link " href="../pages/usage.html">Usage</a>
+        <a class="nav__link is-active" href="../pages/usage.html">Usage</a>
         <a class="nav__link " href="../pages/cli.html">CLI Reference</a>
 
         <div class="nav__groupLabel">Internals</div>
@@ -30,7 +30,7 @@
         <a class="nav__link " href="../pages/troubleshooting.html">Troubleshooting & Limitations</a>
 
         <div class="nav__groupLabel">Policies</div>
-        <a class="nav__link is-active" href="../pages/ai-usage.html">AI Usage</a>
+        <a class="nav__link " href="../pages/ai-usage.html">AI Usage</a>
       </nav>
     </aside>
     
@@ -53,40 +53,63 @@
     
       <div class="content">
         
-<h2>AI Usage</h2>
+<h2>Basic scan</h2>
+<p>Scan a network (CIDR notation required):</p>
+<pre><code>sudo python3 src/main.py -n 192.168.0.1/24</code></pre>
+
+<h2>Verbose scan</h2>
+<p>Enable extra progress output:</p>
+<pre><code>sudo python3 src/main.py -n 192.168.0.1/24 -v</code></pre>
+
+<h2>Timeout control</h2>
+<p>Set the ICMP receive timeout (seconds):</p>
+<pre><code>sudo python3 src/main.py -n 192.168.0.1/24 -t 50</code></pre>
+
+<h2>Ports flag (planned)</h2>
 <p>
-This page provides a lightweight ledger of AI-assisted work and links to dedicated transcript pages.
+The CLI accepts a <code>--ports</code> flag, but port scanning is
+<span class="badge badge--planned">planned / not yet implemented</span>.
+The current implementation does not open or probe TCP/UDP ports.
 </p>
 
-<h2>Ledger</h2>
-<table class="table" id="ai-ledger">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Model Used</th>
-      <th>What Was Affected</th>
-      <th>Conversation Summary</th>
-      <th>Transcript Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Rows inserted by assets/ai-ledger.js -->
-  </tbody>
-</table>
+<h2>Understanding the output</h2>
+<p>
+Output is written to STDOUT in a simple “boxed” format.
+You will see:
+</p>
+<ul>
+  <li>A scan header with the network/timeout/ports arguments</li>
+  <li>Per-host results (IP, MAC, OS guess, active/inactive)</li>
+  <li>A final summary block</li>
+</ul>
 
-<div class="callout">
-  <div class="callout__title">Where to edit</div>
-  <div class="callout__body">
-    Add ledger entries in <code>assets/ai-ledger.js</code>.
-    Add transcript pages in <code>pages/transcripts/</code>.
-  </div>
-</div>
+<h3>Example (truncated)</h3>
+<pre><code>[*] Scanning (7/7): 192.168.0.10
 
-<script src="../assets/ai-ledger.js"></script>
-<script>
-  // Renders the ledger table from assets/ai-ledger.js
-  renderAiLedger("ai-ledger");
-</script>
+[+] Packet 1 ID: 12321
+[+] Packet 2 ID: 13221
+[+] Packet 3 ID: 52205
+[+] Packet 4 ID: 39812
+[+] Packet 5 ID: 41341
+
+
+=| Host Scan Result: 192.168.0.10 (7/7) |=
+=| MAC: 96:8e:f9:80:9d:3d               |=
+=| OS: MacOS or IOS                     |=
+=| Active: True                         |=
+=| Time: 2026-01-15 02:35:59.475513     |=
+==========================================
+
+========| Network Scan Summary |=========
+=| Network: 192.168.0.1/24             |=
+=| Timeout: 15                         |=
+=| Ports: None                         |=
+=| Hosts found: 7                      |=
+=| Active hosts: 7                     |=
+=| Started: 2026-01-15 02:32:46.576794 |=
+=| Ended: 2026-01-15 02:35:59.475559   |=
+=========================================
+</code></pre>
 
       </div>
       <footer class="footer">
