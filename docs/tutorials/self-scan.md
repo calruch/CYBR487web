@@ -1,26 +1,10 @@
-# Tutorial: Self Scan (local sockets)
+# Tutorial: Self Scan (local ports)
 
-Self Scan inspects Linux `/proc` to associate sockets with processes, then prints a boxed summary.
-
-## Run Self Scan only
+Self Scan inspects local `/proc` socket data and associates ports with processes.
 
 ```bash
-sudo python3 -m src.main --scanType SelfScan -v
+sudo python3 main.py --scanType SelfScan
 ```
 
-`--network` is not required for `SelfScan`.
-
-## What you should see
-
-A box titled **Self Scan Results** containing lines like:
-
-- Process name
-- Protocol (`tcp` / `udp`)
-- Local address and port
-- Remote address and port
-
-!!! note "Output nuance"
-    The current implementation returns one socket entry per process name (later matches can overwrite earlier ones). Treat the output as a lightweight summary rather than a complete per-process socket list.
-
 !!! note "Linux-only"
-    This feature depends on `/proc` and is not expected to work on non-Linux systems.
+    This feature depends on `/proc` and will not work on Windows.

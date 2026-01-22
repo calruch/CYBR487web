@@ -1,46 +1,34 @@
 # Quick Start
 
-This page covers the minimum steps to install and run the tool.
+This is the fastest path to running a scan **without reading code**.
 
-## 1) Prerequisites
+## Prerequisites
 
-- **Linux recommended** (Self Scan relies on `/proc`)
-- **Python 3.10+**
-- **Privileges**: ARP/ICMP/SYN scanning and traceroute typically require root or `CAP_NET_RAW`
+- Linux
+- Python 3.10+ recommended
+- Root/admin may be required for raw packet operations
 
-!!! note "Scapy dependency"
-    The scanner uses Scapy for packet crafting and sending. If raw packet features fail, try running with `sudo` (or grant `CAP_NET_RAW` to your Python interpreter).
-
-## 2) Create a virtual environment
+## Install docs toolchain (local preview)
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+pip install -r docs/requirements.txt
 ```
 
-## 3) Install dependencies
+## Run a first scan
+
+Update the entrypoint path below to match your repo (common options shown):
 
 ```bash
-pip install -r requirements.txt
+sudo python3 main.py -n 192.168.1.0/24 --scanType all -p 22 80 443 -v
 ```
 
-## 4) Run a first scan
-
-> The entrypoint imports from a package named `src` (e.g., `from src.argParser import ...`). If your checkout has a `src/` directory, use the command below. If not, align your directory layout to match those imports before running.
+or
 
 ```bash
-sudo python3 -m src.main \
-  --network 192.168.1.0/29 \
-  --ports 22,80,443 \
-  --scanType all \
-  -v
+sudo python3 src/main.py -n 192.168.1.0/24 --scanType all -p 22 80 443 -v
 ```
 
-## 5) Confirm output
-
-You should see boxed sections such as:
-
-- **Scan Starting**
-- **Self Scan Results** (runs as part of `--scanType all`)
-- **Host Scan: (i/N)** for discovered hosts
-- **Network Scan Summary**
+!!! note "Placeholder: entrypoint"
+    If neither `main.py` nor `src/main.py` exists in your repo, replace the command above with the correct entrypoint.

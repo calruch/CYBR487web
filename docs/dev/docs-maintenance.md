@@ -1,29 +1,7 @@
-# Documentation maintenance
+# Docs maintenance
 
-This repository’s documentation is maintained as Markdown files.
+## Regenerate API pages
 
-## What to keep in sync
+API pages are generated automatically during `mkdocs build` and `mkdocs serve` via `scripts/gen_api_pages.py`.
 
-When code changes, update the relevant docs:
-
-- **CLI changes** (`argParser.py`) → update **cli.md** and **README.md** examples
-- **Scan pipeline changes** (`main.py`, `networkScanner.py`, `selfScan.py`) → update **how-it-works.md** and **design-limitations.md**
-- **Output formatting changes** (`generateReport.py`) → update **output.md**
-
-## Documentation quality checklist
-
-Before merging documentation updates:
-
-- No non-technical references or personal identifiers
-- All commands and flags match the current parser
-- Examples use supported `--ports` formats (single, comma list, or range)
-- Notes about privileges and platform requirements are accurate
-- Headings, code blocks, and lists render cleanly in Markdown
-
-## Suggested workflow
-
-1. Make the code change.
-2. Update the relevant Markdown file(s).
-3. Run a quick sanity pass:
-   - `python3 -m unittest discover -s . -p "test*.py"` (if tests are present and passing)
-   - Run one representative scan command (in an authorized environment).
+No manual step required.

@@ -1,20 +1,15 @@
 # Network Analyzer Documentation
 
-Network Analyzer is a Linux-focused Python tool for local socket inspection and basic network reconnaissance.
+This site documents **CYBR487 Project 1 — Network Analyzer**, a Linux-first network analysis utility.
 
-## Capabilities
+It supports:
 
-- **Self Scan (local)**: correlate TCP/UDP sockets with owning processes via Linux `/proc`.
-- **Host discovery**: ARP (local network) or ICMP (ping sweep).
-- **OS family inference**: best-effort ICMP/IPID-based categorization (Windows/FreeBSD, Linux, macOS/iOS, Unknown).
-- **TCP SYN port scan**: scan a user-supplied set of TCP ports.
-- **Traceroute**: ICMP traceroute or TCP traceroute (SYN to destination port 80) with configurable hop limit.
+- **Host discovery** (ARP + ICMP approaches)
+- **TCP SYN port scanning**
+- **Traceroute** (ICMP and TCP variants)
+- **Self Scan** (local listening sockets + process association)
 
 !!! warning "Authorization required"
-    Only scan networks and systems you own or have explicit permission to test.
+    Only scan networks you own or have explicit permission to test.
 
-## Where to start
-
-- **Quick Start**: install + run commands and a “known-good” first scan.
-- **Tutorials**: step-by-step walkthroughs for common tasks (subnet scan, port scan, traceroute, Self Scan).
-- **Reference**: flags and output notes.
+Use the left navigation to find Tutorials, How-to guides, Reference (CLI/output/API), and deeper explanations.
