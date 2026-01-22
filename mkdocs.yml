@@ -79,31 +79,42 @@ plugins:
 nav:
   - Home: index.md
   - Quick Start: quickstart.md
-  - Tutorials:
-      - First scan (walkthrough): tutorials/first-scan.md
-      - Self Scan (local ports): tutorials/self-scan.md
-  - How-to Guides:
-      - Scan a subnet: howto/scan-a-subnet.md
-      - Scan specific ports: howto/scan-ports.md
-      - Run traceroute: howto/traceroute.md
-      - Increase verbosity: howto/verbosity.md
-  - Reference:
-      - CLI reference: reference/cli.md
-      - Output reference: reference/output.md
-      - Troubleshooting: reference/troubleshooting.md
-      - API reference: reference/api/index.md
-  - Explanation:
-      - How it works: explanation/how-it-works.md
-      - Design & limitations: explanation/design-limitations.md
-      - Security & ethics: explanation/security-ethics.md
-  - Development:
-      - Developer guide: dev/developer-guide.md
-      - Docstring guide: dev/docstrings.md
-      - Docs maintenance: dev/docs-maintenance.md
+  - Tutorials: tutorials.md
+  - How-to Guides: how-to.md
+  - Reference: reference.md
+  - Concepts: concepts.md
+  - Development: development.md
   - Testing:
       - Traceroute Testing Lab: testing/traceLab.md
-  - Project:
-      - AI usage: project/ai-usage.md
-      - Meeting transcripts:
-          - project/transcripts/index.md
-          - 2026-01-08 — Docs site: project/transcripts/2026-01-08-docs-site.md
+
+#nav:
+#  - Home: index.md
+#  - Quick Start: quickstart.md
+#  - Tutorials:
+#      - First scan (walkthrough): tutorials/first-scan.md
+#      - Self Scan (local ports): tutorials/self-scan.md
+#  - How-to Guides:
+#      - Scan a subnet: howto/scan-a-subnet.md
+#      - Scan specific ports: howto/scan-ports.md
+#      - Run traceroute: howto/traceroute.md
+#      - Increase verbosity: howto/verbosity.md
+#  - Reference:
+#      - CLI reference: reference/cli.md
+#      - Output reference: reference/output.md
+#      - Troubleshooting: reference/troubleshooting.md
+#      - API reference: reference/api/index.md
+#  - Explanation:
+#      - How it works: explanation/how-it-works.md
+#      - Design & limitations: explanation/design-limitations.md
+#      - Security & ethics: explanation/security-ethics.md
+#  - Development:
+#      - Developer guide: dev/developer-guide.md
+#      - Docstring guide: dev/docstrings.md
+#      - Docs maintenance: dev/docs-maintenance.md
+#  - Testing:
+#      - Traceroute Testing Lab: testing/traceLab.md
+#  - Project:
+#      - AI usage: project/ai-usage.md
+#      - Meeting transcripts:
+#          - project/transcripts/index.md
+#          - 2026-01-08 — Docs site: project/transcripts/2026-01-08-docs-site.md

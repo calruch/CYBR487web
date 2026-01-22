@@ -1,34 +1,64 @@
-# Quick Start
+# Quickstart
 
-This is the fastest path to running a scan **without reading code**.
+This page covers the minimum steps to install and run Network Analyzer.
 
 ## Prerequisites
 
-- Linux
-- Python 3.10+ recommended
-- Root/admin may be required for raw packet operations
+- **Linux required** for the Self Scan feature (it reads from `/proc`).
+- **Python 3.12+**.
+- **Privileges**: ARP/ICMP/SYN scanning and traceroute typically require **root** or `CAP_NET_RAW`.
 
-## Install docs toolchain (local preview)
+!!! note "Scapy dependency"
+    Network scanning features rely on Scapy for raw packet operations. If you see permission errors or unexpectedly empty results, try running with `sudo`.
+
+## Install
+
+Create and activate a virtual environment:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r docs/requirements.txt
 ```
 
-## Run a first scan
-
-Update the entrypoint path below to match your repo (common options shown):
+Install dependencies:
 
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --scanType all -p 22 80 443 -v
+pip install -r requirements.txt
 ```
 
-or
+## Run a first network scan
+
+A typical first run is an **all** scan over a small CIDR range. For `--scanType=all`, you must provide `--ports`.
 
 ```bash
-sudo python3 src/main.py -n 192.168.1.0/24 --scanType all -p 22 80 443 -v
+sudo python3 -m src.main \
+  --network=192.168.1.0/29 \
+  --hostid=ARP \
+  --ports=22,80,443 \
+  --timeout=5 \
+  --scanType=all \
+  -v
 ```
 
-!!! note "Placeholder: entrypoint"
-    If neither `main.py` nor `src/main.py` exists in your repo, replace the command above with the correct entrypoint.
+## Run a local Self Scan
+
+Self Scan inspects your local machine's listening sockets. It does not require `--network`.
+
+```bash
+sudo python3 -m src.main --scanType=SelfScan
+```
+
+## Confirm it worked
+
+You should see boxed sections such as:
+
+- **Scan Starting**
+- **Self Scan Results** (runs as part of `--scanType=all`)
+- **Host Scan (i/N)** per discovered host
+- **Network Scan Summary** (not printed in `SelfScan`-only mode)
+
+## Next steps
+
+- [Tutorials](tutorials.md)
+- [How-to guides](how-to.md)
+- [Reference](reference.md)
