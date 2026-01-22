@@ -1,21 +1,9 @@
 # How-to: Scan a subnet
 
-## Example
-
-Scan a small subnet with the full scan mode:
-
 ```bash
-sudo python3 -m src.main \
-  --network 10.0.0.0/28 \
-  --ports 22,80,443 \
-  --scanType all \
-  -v
+sudo python3 main.py -n 10.0.0.0/24 --scanType all -p 22 80 443 -v
 ```
 
-## Tips
-
-- Prefer small CIDRs for demos (`/29`, `/28`, `/27`).
-- Host discovery method is controlled by `--hostid`:
-  - `--hostid ARP` (default; best for local LANs)
-  - `--hostid ICMP` (ping sweep)
-  - `--hostid NONE` (skip discovery; useful for traceroute-only modes)
+Tips:
+- Use small subnets for demos (e.g., `/28`)
+- If ICMP is blocked, try ARP discovery on local LANs
