@@ -90,6 +90,8 @@ nav:
   - Developer guide: dev/developer-guide.md
   - Docstring guide: dev/docstrings.md
   - Docs maintenance: dev/docs-maintenance.md
+- Testing:
+  - Traceroute Lab Enviroment: testing/traceroute-lab.md
 - Project:
   - AI usage: project/ai-usage.md
   - Meeting transcripts:
