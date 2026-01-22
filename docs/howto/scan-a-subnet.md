@@ -2,15 +2,20 @@
 
 ## Example
 
+Scan a small subnet with the full scan mode:
+
 ```bash
-sudo python3 main.py -n 10.0.0.0/24 --scanType all -p 22 80 443 -v
+sudo python3 -m src.main \
+  --network 10.0.0.0/28 \
+  --ports 22,80,443 \
+  --scanType all \
+  -v
 ```
 
 ## Tips
 
-- Prefer a smaller subnet for demos: `/29`, `/28`, `/27`
-- If host discovery misses devices, try switching host discovery method:
-  - `--hostid ARP` (default in the snapshot)
-  - `--hostid ICMP`
-
-See **CLI reference** for exact flag details.
+- Prefer small CIDRs for demos (`/29`, `/28`, `/27`).
+- Host discovery method is controlled by `--hostid`:
+  - `--hostid ARP` (default; best for local LANs)
+  - `--hostid ICMP` (ping sweep)
+  - `--hostid NONE` (skip discovery; useful for traceroute-only modes)

@@ -1,29 +1,29 @@
-# Docs maintenance
+# Documentation maintenance
 
-## Local preview
+This repository’s documentation is maintained as Markdown files.
 
-From the project repo root:
+## What to keep in sync
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-mkdocs serve
-```
+When code changes, update the relevant docs:
 
-## Build for CI
+- **CLI changes** (`argParser.py`) → update **cli.md** and **README.md** examples
+- **Scan pipeline changes** (`main.py`, `networkScanner.py`, `selfScan.py`) → update **how-it-works.md** and **design-limitations.md**
+- **Output formatting changes** (`generateReport.py`) → update **output.md**
 
-```bash
-mkdocs build --strict
-```
+## Documentation quality checklist
 
-## API reference automation
+Before merging documentation updates:
 
-This site includes a script that generates API reference markdown pages from your `src/` folder:
+- No non-technical references or personal identifiers
+- All commands and flags match the current parser
+- Examples use supported `--ports` formats (single, comma list, or range)
+- Notes about privileges and platform requirements are accurate
+- Headings, code blocks, and lists render cleanly in Markdown
 
-- `scripts/gen_api_pages.py` runs during the MkDocs build (via `mkdocs-gen-files`).
+## Suggested workflow
 
-If your `src/` path changes, update:
-
-- `mkdocs.yml` → `plugins.mkdocstrings.handlers.python.paths`
-- `scripts/gen_api_pages.py` source root
+1. Make the code change.
+2. Update the relevant Markdown file(s).
+3. Run a quick sanity pass:
+   - `python3 -m unittest discover -s . -p "test*.py"` (if tests are present and passing)
+   - Run one representative scan command (in an authorized environment).

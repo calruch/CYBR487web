@@ -1,18 +1,17 @@
-# Quick Start (the teacher-friendly version)
+# Quick Start
 
-This is the **minimum** set of steps to install and run a scan without digging through code.
+This page covers the minimum steps to install and run the tool.
 
 ## 1) Prerequisites
 
-- **Linux** (the project uses `/proc` for Self Scan and raw packet features via Scapy)
-- **Python 3.10+** recommended
-- Admin/root privileges are often required for raw packet operations (e.g., SYN scan, ARP)
+- **Linux recommended** (Self Scan relies on `/proc`)
+- **Python 3.10+**
+- **Privileges**: ARP/ICMP/SYN scanning and traceroute typically require root or `CAP_NET_RAW`
 
 !!! note "Scapy dependency"
-    The project uses `scapy` (and therefore your OS may need packet capture capabilities).
-    If Scapy is installed but raw packets fail, see **Troubleshooting**.
+    The scanner uses Scapy for packet crafting and sending. If raw packet features fail, try running with `sudo` (or grant `CAP_NET_RAW` to your Python interpreter).
 
-## 2) Create a virtual environment (recommended)
+## 2) Create a virtual environment
 
 ```bash
 python3 -m venv .venv
@@ -21,37 +20,27 @@ source .venv/bin/activate
 
 ## 3) Install dependencies
 
-If your project repo already includes a requirements file, use it.
-
-If you **do not** have one yet, minimum needed (per code imports) is:
-
 ```bash
-pip install scapy
+pip install -r requirements.txt
 ```
 
 ## 4) Run a first scan
 
-### Option A — `main.py` is at the repo root
+> The entrypoint imports from a package named `src` (e.g., `from src.argParser import ...`). If your checkout has a `src/` directory, use the command below. If not, align your directory layout to match those imports before running.
 
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --scanType all -p 22 80 443 -v
+sudo python3 -m src.main \
+  --network 192.168.1.0/29 \
+  --ports 22,80,443 \
+  --scanType all \
+  -v
 ```
 
-### Option B — `main.py` is inside `src/`
+## 5) Confirm output
 
-```bash
-sudo python3 src/main.py -n 192.168.1.0/24 --scanType all -p 22 80 443 -v
-```
-
-If neither is true, update the entrypoint path above to match your repo.
-
-## 5) Confirm the output
-
-The program prints boxed sections like:
+You should see boxed sections such as:
 
 - **Scan Starting**
-- **Scanning (i/N): \<IP\>**
-- **Host Scan Result: \<IP\>**
+- **Self Scan Results** (runs as part of `--scanType all`)
+- **Host Scan: (i/N)** for discovered hosts
 - **Network Scan Summary**
-
-See **Reference → Output reference** for the full data layout.

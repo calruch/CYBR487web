@@ -1,82 +1,105 @@
-# Output reference
+# Output and results
 
-This page explains what the tool prints **and** the in-memory result structure the program builds.
+This tool prints **formatted console output** and also builds an in-memory results dictionary.
 
-## Printed sections (current snapshot)
+> The current code does **not** write JSON or files to disk.
 
-### Scan Starting
+## Console output
 
-Printed at the beginning:
+Output is produced by `generateReport.py`.
 
-- Network
-- Ports
+### Scan start
+
+At the beginning of a run, the tool prints a boxed header:
+
+- Network (the CIDR string you provided)
+- Ports (only if `--ports` was provided; printed as the Python list)
 - Timeout
 
-### Host Scan Result
+### Self scan results
 
-Printed per host:
+When `--scanType=all` or `--scanType=SelfScan`, a “Self Scan Results” section is printed with entries like:
 
-- MAC
-- OS (coarse category)
-- Active flag
-- Time
+- Process name
+- Protocol (`tcp` or `udp`)
+- Local address (`ip:port`)
+- Remote address (`ip:port`)
 
-### Network Scan Summary
+Notes:
 
-Printed at the end:
+- Only TCP state `0A` (LISTEN) and UDP state `07` are included.
+- The current implementation shows at most one connection per process name.
+
+### Host scan results
+
+For each discovered host, the tool prints a “Host Scan” section that includes:
+
+- IP
+- MAC (for ARP-discovered hosts; `None` for ICMP-discovered hosts)
+- OS (heuristic string)
+- Active (boolean)
+- Time (timestamp at the moment the host record was stored)
+
+### Port scan results
+
+When `--scanType=all` or `--scanType=TCP`, the tool prints a “Port Scan” section per host:
+
+- IP
+- A list of open ports (`Port: <n>` per line)
+
+Only open ports are printed.
+
+### Traceroute results
+
+When `--scanType=all` or a traceroute-only scan type is used, the tool may print traceroute results:
+
+- Target IP
+- Rows of `Hop: <n> | IP: <hop_ip or *> | Time: <ms>`
+
+If a trace returns `None` (for example, first hops are timeouts), the tool prints a short note instead of a table.
+
+### End-of-scan summary
+
+At the end, a “Network Scan Summary” section is printed with:
 
 - Network
 - Timeout
-- Ports
 - Hosts found
 - Active hosts
-- Started
-- Ended
+- Started / Ended timestamps
 
-!!! note "Ports + traceroute visibility"
-    The current `print_host_report()` output does **not** print ports or traceroute details, even though
-    they are stored per host. If your teacher expects to see them in the report output, you may want to
-    extend the report formatting (recommended improvement).
+## In-memory results structure
 
-## Results structure
-
-At the end of the scan, `main.py` builds:
+`main.py` builds and returns a dictionary in this shape:
 
 ```python
 results = {
-  "info": {
-    "network": ipList,
-    "ports": portList,
-    "timeout": timeout,
-    "started": started,
-    "ended": ended,
-  },
-  "hosts": storage.getList(),
+    "info": {
+        "network": ipList,        # CIDR string
+        "timeout": timeout,
+        "started": started,       # datetime
+        "ended": ended,           # datetime
+    },
+    "hosts": [
+        {
+            "IP": "192.168.1.10",
+            "MAC": "aa:bb:cc:dd:ee:ff" or None,
+            "HostInfo": {
+                "OS": "Linux" | "Windows or FreeBSD" | "MacOS or IOS" | "Unknown OS" | "Inactive Host",
+                "active": True | False,
+                "Time": datetime,
+                "Ports": [22, 80] or None,
+                "TraceRouteTCP": list | None,
+                "TraceRouteICMP": list | None,
+            },
+        },
+        # ... more hosts
+    ],
 }
 ```
 
-Each entry in `hosts` (from `HostStorage.addToList`) has the shape:
+A few practical notes:
 
-```python
-{
-  "IP": "<ip>",
-  "MAC": "<mac or None>",
-  "HostInfo": {
-    "OS": "<string>",
-    "active": <bool>,
-    "Time": "<datetime>",
-    "Ports": <list or None>,
-    "TraceRoute": <list/dict or None>
-  }
-}
-```
-
-## OS categories
-
-The HostStorage translation function maps:
-
-- `1` → "Windows or FreeBSD"
-- `2` → "Linux"
-- `3` → "MacOS or IOS"
-- `4` → "Unknown OS"
-- `5` → "Inactive Host"
+- `"Ports"` will be `None` unless a TCP scan was run.
+- Traceroute lists are a sequence of `[hop, ip, rtt_ms]` entries (or `None`).
+- OS strings are produced by `HostStorage._translateOStype()`.

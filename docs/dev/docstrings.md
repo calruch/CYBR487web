@@ -1,37 +1,39 @@
-# Docstring guide (MkDocs + mkdocstrings)
+# Docstring guidance
 
-MkDocs Material can render API docs directly from Python docstrings via **mkdocstrings**.
+The codebase uses docstrings extensively. To keep them consistent and useful, prefer **short, descriptive docstrings** that focus on:
 
-## Recommended style
+- What the function/class does
+- Parameters (names + types when non-obvious)
+- Return value (type + meaning)
+- Exceptions (when relevant)
 
-MkDocstrings parses several styles well. For VS Code + Python, **Google-style** docstrings are a good balance:
+## Recommended format
+
+Use a lightweight Google-style format:
 
 ```python
-def parse_network(value: str) -> list[str]:
-    """Expand and validate a CIDR network.
+def parse_ports(spec: str) -> list[int]:
+    """Parse a port specification into a list of integers.
 
     Args:
-        value: CIDR string like "192.168.1.0/24".
+        spec: Port spec string (e.g., "22", "22,80", "1-1024").
 
     Returns:
-        A list of IP strings in the target range.
+        A list of port integers.
 
     Raises:
-        ValueError: If the network is invalid.
+        RuntimeError: If the input is syntactically invalid.
     """
+    ...
 ```
 
-!!! note "Current snapshot docstrings"
-    The snapshot docstrings are valid Python docstrings, but they are more like a custom field format
-    (`name: ...`, `description: ...`). Mkdocstrings will still render them as text, but you get better
-    formatting if you convert to Google-style.
+## Practical rules
 
-## VS Code extension to generate docstrings
+- Keep the first line as an imperative summary.
+- Avoid repeating information that is obvious from the name.
+- If a function is a public entrypoint, include examples.
+- If behavior is heuristic or best-effort (e.g., OS fingerprinting), say so.
 
-Recommended extension:
+## Notes about the current code
 
-- **autoDocstring** (`njpwerner.autodocstring`)
-
-It can generate Google-style docstrings automatically.
-
-Tip: In VS Code, open Command Palette → “Generate Docstring”.
+Several modules use a `name:` / `description:` style in docstrings. That is acceptable, but if you refactor, consider migrating toward a single consistent style like the example above.

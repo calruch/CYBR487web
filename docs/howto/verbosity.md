@@ -1,12 +1,12 @@
 # How-to: Increase verbosity
 
-The tool exposes two verbosity levels:
+The CLI exposes two verbosity flags:
 
-- `-v / --verbose` — standard status output
-- `-vv / --moreverbose` — more detailed output (implementation-dependent)
+- `-v / --verbose` — prints status lines as the scan runs
+- `-vv / --moreverbose` — parsed by the argument parser, but not currently used to change output
 
 Example:
 
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --scanType all -p 22 80 -vv
+sudo python3 -m src.main --network 192.168.1.0/29 --scanType all --ports 22,80 -v
 ```

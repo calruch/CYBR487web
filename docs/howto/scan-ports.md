@@ -1,24 +1,27 @@
 # How-to: Scan specific ports
 
-The tool supports multiple port input formats.
+Port scanning uses TCP SYN probes and requires `--ports`.
+
+!!! note "Required flag"
+    `--ports` must be provided for `--scanType TCP` and `--scanType all`. The current implementation raises an error if no valid ports are supplied.
 
 ## Single port
 
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --scanType TCP -p 22 -v
+sudo python3 -m src.main --network 192.168.1.0/29 --scanType TCP --ports 22 -v
 ```
 
-## Space-separated ports
+## Comma-separated list
 
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --scanType TCP -p 22 80 443
+sudo python3 -m src.main --network 192.168.1.0/29 --scanType TCP --ports 22,80,443 -v
 ```
 
 ## Range
 
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --scanType TCP -p 1-1023
+sudo python3 -m src.main --network 192.168.1.0/29 --scanType TCP --ports 1-1023 -v
 ```
 
 !!! note "Performance"
-    Large ranges (e.g., `1-65535`) will take longer and may cause timeouts depending on your network and timeout setting.
+    Large ranges (for example `1-65535`) can take a long time and may require increasing `--timeout`.

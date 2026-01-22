@@ -1,14 +1,29 @@
-# Security & ethics
+# Security and ethics
 
-This project is a network scanning tool. Network scanning can be intrusive and, in some contexts, illegal.
+This tool performs network probing (ARP, ICMP, TCP SYN) and traceroute operations.
 
-## Rules of thumb
+## Authorized use only
 
-- Only scan networks you own or have explicit authorization to test.
-- Prefer small scopes for demos (e.g., a VM host-only network).
-- Avoid scanning public IPs unless you have written permission.
+- Only scan networks and hosts you **own** or have **explicit permission** to test.
+- Make sure your activity complies with local laws, organizational policies, and acceptable-use rules.
 
-## Safety considerations
+## Operational safety
 
-- Use conservative timeouts and port ranges on production networks.
-- Expect some environments to block ICMP or TCP probes.
+- Prefer the smallest possible scope (use narrow CIDR ranges and limited port lists).
+- Use conservative timeouts and rate limits when scanning fragile networks.
+- Expect that some environments will flag scanning activity (IDS/IPS, endpoint firewalls).
+
+## Data handling
+
+- The tool prints results to the console and holds results in memory.
+- If you add persistent logging/export in the future, consider how you will protect:
+  - Host identifiers (IPs/MACs)
+  - Scan results (open ports, topology information)
+  - Any associated timestamps
+
+## Responsible disclosure
+
+If you discover unexpected exposure or vulnerabilities while testing with permission:
+
+- Follow your organization’s disclosure process.
+- Share only the minimum details required to remediate.

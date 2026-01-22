@@ -1,43 +1,67 @@
 # Troubleshooting
 
-## `PermissionError` / raw socket errors
+## “the following arguments are required: --network” / “No valid IPs were retrieved”
 
-Many scan types require raw packets and may require root:
+For scan types other than `SelfScan`, you must provide `--network`.
+
+Example:
 
 ```bash
-sudo python3 main.py ...
+sudo python3 -m src.main --network=192.168.1.0/24 --hostid=ARP --scanType=ICMP -v
 ```
 
-## No hosts discovered
+## Port scan runs but finds nothing
+
+Make sure you supplied `--ports` in a supported format:
+
+- `--ports=22`
+- `--ports=22,80,443`
+- `--ports=1-1024`
+
+If you run `--scanType=all` or `--scanType=TCP` without `--ports`, the port scanner will raise an error.
+
+## “PermissionError” / no results unless using sudo
+
+Many operations use raw packets (Scapy) and typically require elevated privileges.
 
 Try:
 
-- Ensure you're scanning the correct interface/network
-- Use ICMP host discovery:
-
 ```bash
-sudo python3 main.py -n 192.168.1.0/24 --hostid ICMP --scanType ICMP -v
+sudo python3 -m src.main --network=192.168.1.0/24 --hostid=ARP --ports=22,80,443 --scanType=all
 ```
 
-- If ICMP is blocked on the network, use ARP discovery on a local subnet.
+For `SelfScan`, you may also need elevated privileges to read `/proc/<pid>/fd` entries for other processes.
 
-## Running inside a VM
+## ARP discovery finds nothing
 
-VM networking mode matters:
+ARP discovery works only on the local L2 segment (same broadcast domain). If you are scanning a routed network or a VPN segment, try ICMP host discovery instead:
 
-- NAT may block inbound probes
-- Bridged mode tends to work better for LAN scans
-- Host-only networks are excellent for safe demos
+```bash
+sudo python3 -m src.main --network=10.0.0.0/24 --hostid=ICMP --scanType=ICMP
+```
 
-## Slow scans / timeouts
+## Traceroute prints “no results”
 
-- Reduce the number of ports
-- Reduce subnet size
-- Increase timeout slightly (`-t 3`, `-t 5`)
+Traceroute results may be suppressed when early hops time out.
 
-## Known limitations
+Things to try:
 
-- Self Scan depends on `/proc` (Linux-only)
-- OS fingerprinting is heuristic (may be wrong behind NAT/firewalls)
+- Increase `--maxhops` (valid range `1–60`)
+- Increase `--timeout` (valid range `1–300`)
+- Prefer TCP traceroute (`--scanType=TraceRouteTCP`) if ICMP is blocked
 
-If something is missing here, add it as soon as you discover it.
+Example:
+
+```bash
+sudo python3 -m src.main --network=192.168.1.1/32 --hostid=NONE --maxhops=30 --timeout=5 --scanType=TraceRouteTCP
+```
+
+## The `-h/--help` flag doesn’t show usage
+
+The CLI currently parses `-h/--help` as a normal boolean flag, but no code prints argparse help/usage.
+
+Use **cli.md** for the supported options and examples.
+
+## Convenience scripts don’t work
+
+`runApplication.sh` and `runTest.sh` reference paths like `misc/...` and `tst/...`. If your repository does not include those directories, run the commands directly (examples are in **README.md** and **cli.md**).

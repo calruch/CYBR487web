@@ -1,29 +1,20 @@
 # Network Analyzer Documentation
 
-Welcome to the **CYBR487 Project 1 — Network Analyzer** documentation site.
+Network Analyzer is a Linux-focused Python tool for local socket inspection and basic network reconnaissance.
 
-This tool is a **Linux-first** network analysis utility built for a CYBR487 class project. It supports:
+## Capabilities
 
-- **Host discovery** (ARP-based and ICMP-based approaches)
-- **TCP SYN port scanning**
-- **Traceroute** (ICMP and TCP variants)
-- **Self Scan**: inspect *local* listening sockets (similar in spirit to `netstat -tuln`)
+- **Self Scan (local)**: correlate TCP/UDP sockets with owning processes via Linux `/proc`.
+- **Host discovery**: ARP (local network) or ICMP (ping sweep).
+- **OS family inference**: best-effort ICMP/IPID-based categorization (Windows/FreeBSD, Linux, macOS/iOS, Unknown).
+- **TCP SYN port scan**: scan a user-supplied set of TCP ports.
+- **Traceroute**: ICMP traceroute or TCP traceroute (SYN to destination port 80) with configurable hop limit.
 
 !!! warning "Authorization required"
-    Only scan networks you own or have explicit permission to test.
+    Only scan networks and systems you own or have explicit permission to test.
 
 ## Where to start
 
-- **Quick Start** → see the fastest path to a successful scan.
-- **Tutorials** → step-by-step walkthroughs.
-- **Reference** → CLI and output formats.
-- **Explanation** → how the internals work, design decisions, and limitations.
-
-## Project snapshot used for this documentation
-
-This site was authored from the provided snapshots:
-
-- `WebPage.zip` (original site styling + assets like the EWU logo)
-- `ProjectFiles.zip` (project modules and behavior)
-
-If something in your live repo differs (paths, entrypoints, scripts), update the placeholders called out in the docs.
+- **Quick Start**: install + run commands and a “known-good” first scan.
+- **Tutorials**: step-by-step walkthroughs for common tasks (subnet scan, port scan, traceroute, Self Scan).
+- **Reference**: flags and output notes.
