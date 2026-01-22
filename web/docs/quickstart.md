@@ -1,64 +1,67 @@
 # Quick Start
 
-This guide gets you from a fresh clone to a successful run without reading code.
+## Requirements
 
-## 1) Create and activate a virtual environment
+From the repository README:
 
-From the repository root:
+- Linux-based OS required
+- Python **3.12+**
+- Bash is required for the helper scripts
+- WSL *may* work, but is not guaranteed
+
+## 1) Install requirements (manual)
+
+From the project repo root:
 
 ```bash
 python3 -m venv env
 source env/bin/activate
-```
-
-## 2) Install runtime dependencies
-
-The application dependencies live in `misc/requirements.txt`.
-
-```bash
 pip install -r misc/requirements.txt
 ```
 
-## 3) Run the tool
+> Many scan features use raw packets (Scapy). On most systems you will need to run scans with `sudo`.
 
-### Option A — automated script
+## 2) Run a scan (recommended)
 
-The repo includes a convenience script:
+Use the provided script:
 
 ```bash
 chmod +x runApplication.sh
-sudo ./runApplication.sh <IP_OR_CIDR>
+sudo ./runApplication.sh <IP-or-CIDR>
 ```
 
-What it does (currently): creates/activates a venv, installs `misc/requirements.txt`, then runs `python3 -m src.main` with a fixed port list and `--timeout=5 --verbose`.
-
-### Option B — run directly
-
-Scan a network (requires `--network`; ports are required for `all` and `TCP` scans):
+Example:
 
 ```bash
-sudo python3 -m src.main \
-  --network=192.168.0.0/24 \
-  --scanType=all \
-  --ports=22,80,443 \
-  --timeout=5 \
-  --verbose
+sudo ./runApplication.sh 192.168.0.0/24
 ```
 
-Run Self Scan only (no `--network` required):
+### What the script does
+
+`runApplication.sh` currently:
+
+- Creates a venv named `env`
+- Installs `misc/requirements.txt`
+- Runs:
 
 ```bash
-sudo python3 -m src.main --scanType=SelfScan --verbose
+python3 -m src.main --network=<CIDR> --timeout=5 --verbose --ports=4682,6969,8000,544,8096,8080,8443,8888,9000,9090,9200,9300,11211,27017
 ```
 
-## 4) (Optional) Run the unit tests
+If you want a different timeout/port set, edit `runApplication.sh`.
+
+## 3) Run manually
 
 ```bash
-chmod +x runTest.sh
-./runTest.sh
+source env/bin/activate
+sudo python3 -m src.main --network=192.168.0.0/24 --timeout=5 --verbose --ports=22,80,443
+deactivate
 ```
 
-## Notes
+## 4) Self Scan (no `--network` required)
 
-- If you run without `sudo`, some scans may silently return less data (raw packets and `/proc/<pid>/fd` access often require elevated permissions).
-- If `--scanType` is `all`, the program performs **both** traceroute variants (TCP and ICMP) for each discovered host.
+```bash
+sudo python3 -m src.main --scanType SelfScan --verbose
+```
+
+Self Scan reads `/proc` and reports listening sockets by process name.

@@ -1,27 +1,13 @@
-# Network Analyzer
+# Network Scanner
 
-A Linux-first network analysis tool that combines:
+A command-line network scanning tool that can:
 
-- **Host discovery** via ARP or ICMP ping
-- **OS fingerprinting** via ICMP responses
-- **TCP SYN port scanning**
-- **Traceroute** (TCP and ICMP)
-- **Self Scan** to list local TCP/UDP sockets by process (from `/proc`)
+- Discover hosts using **ARP** or **ICMP**
+- Perform basic **OS fingerprinting** (IPID behavior via ICMP)
+- Scan **TCP ports** using **SYN** probes
+- Run **traceroute** via ICMP or TCP
+- Perform a local **Self Scan** (processes with listening sockets, via `/proc`)
 
-!!! warning "Authorization"
-    Only scan networks and systems you own or have explicit permission to test.
+Use the **Quick Start** to run your first scan, then use the **User Guide** for details on scan types and flags.
 
-## Quick start
-
-If you already have the repo checked out, start here:
-
-- **Quick Start** → installation + the fastest working commands
-- **CLI** → exact flags and valid values (matches `src/argParser.py`)
-- **How It Works** → what each scan mode does and how modules fit together
-
-## Requirements (runtime)
-
-- Linux (Self Scan reads `/proc`, and Scapy is used for packet operations)
-- Python 3.12+ (per README)
-- Root/admin privileges are commonly required for ARP, TCP SYN scanning, and traceroute
-
+> This site documents the current behavior of the code in `src/` and the run scripts in the repo root.

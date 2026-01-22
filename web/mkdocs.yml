@@ -1,78 +1,70 @@
-site_name: Network Analyzer
-site_description: Linux-first network analysis tool (host discovery, TCP SYN port scanning, traceroute, and local self-scan).
+site_name: Network Scanner Documentation
+site_description: User and developer documentation for the Network Scanner CLI tool.
 site_url: https://calruch.github.io/CYBR487project1/
 repo_url: https://github.com/calruch/CYBR487project1
 repo_name: calruch/CYBR487project1
-edit_uri: edit/main/web/docs/
-
-docs_dir: docs
-site_dir: site
-use_directory_urls: true
 
 theme:
   name: material
-  language: en
   logo: assets/images/ewu-logo.webp
   favicon: assets/images/ewu-logo.webp
-  features:
-    - navigation.instant
-    - navigation.instant.prefetch
-    - navigation.tracking
-    - navigation.path
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - toc.follow
-    - search.highlight
-    - search.share
-    - content.code.copy
-    - content.action.edit
-  icon:
-    repo: fontawesome/brands/github
   palette:
     - scheme: slate
-      primary: black
       accent: red
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
 
 extra_css:
   - stylesheets/extra.css
-extra_javascript:
-  - javascripts/site.js
 
 markdown_extensions:
   - admonition
-  - attr_list
-  - def_list
-  - footnotes
-  - md_in_html
-  - tables
   - toc:
       permalink: true
   - pymdownx.details
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
 
 plugins:
   - search
+  - gen-files:
+      scripts:
+        - scripts/gen_api_pages.py
   - mkdocstrings:
       handlers:
         python:
           paths:
-            - ..
+            - ../src
           options:
-            docstring_style: google
-            show_source: false
+            show_source: true
+            show_signature: true
             show_signature_annotations: true
-            members_order: source
-            merge_init_into_class: true
+            heading_level: 2
 
 nav:
   - Home: index.md
   - Quick Start: quickstart.md
-  - CLI: cli.md
-  - How It Works: how-it-works.md
-  - API Reference: api.md
+  - User Guide:
+      - Usage: pages/usage.md
+      - CLI Options: pages/cli.md
+      - Scan Types: pages/scan-types.md
+      - Output & Reports: pages/output.md
+  - How It Works:
+      - Overview: pages/how-it-works.md
+      - Host Discovery: pages/host-discovery.md
+      - OS Fingerprinting: pages/os-fingerprinting.md
+      - TCP Port Scanning: pages/tcp-port-scanning.md
+      - Traceroute: pages/traceroute.md
+      - Self Scan: pages/self-scan.md
+  - Reference:
+      - API Reference: reference/api/index.md
+  - Troubleshooting: pages/troubleshooting.md
+  - AI Usage: pages/ai-usage.md
+  - Contributing: pages/contributing.md
