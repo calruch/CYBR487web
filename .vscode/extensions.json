@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "njpwerner.autodocstring",
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-preview-github-styles",
+    "redhat.vscode-yaml"
+  ]
+}
