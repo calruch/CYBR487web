@@ -19,8 +19,6 @@ theme:
     - navigation.instant.prefetch
     - navigation.tracking
     - navigation.path
-    - navigation.sections
-    - navigation.expand
     - navigation.top
     - toc.follow
     - search.highlight
@@ -102,6 +100,8 @@ nav:
       - Developer guide: dev/developer-guide.md
       - Docstring guide: dev/docstrings.md
       - Docs maintenance: dev/docs-maintenance.md
+  - Testing:
+      - Traceroute Testing Lab: testing/traceLab.md
   - Project:
       - AI usage: project/ai-usage.md
       - Meeting transcripts:
