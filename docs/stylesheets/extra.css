@@ -43,3 +43,8 @@
 .md-typeset pre > code{
   border: 1px solid rgba(255,255,255,.10);
 }
+
+/* Fix Firefox showing a white strip below content on short pages */
+html, body {
+  background-color: var(--md-default-bg-color, #000);
+}

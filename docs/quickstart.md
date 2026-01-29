@@ -23,7 +23,7 @@ source .venv/bin/activate
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -r misc/requirements.txt
 ```
 
 ## Run a first network scan
@@ -31,13 +31,7 @@ pip install -r requirements.txt
 A typical first run is an **all** scan over a small CIDR range. For `--scanType=all`, you must provide `--ports`.
 
 ```bash
-sudo python3 -m src.main \
-  --network=192.168.1.0/29 \
-  --hostid=ARP \
-  --ports=22,80,443 \
-  --timeout=5 \
-  --scanType=all \
-  -v
+sudo python3 -m src.main --network=192.168.0.0/24 --hostid=ARP --timeout=5 --scanType=all --verbose
 ```
 
 ## Run a local Self Scan
@@ -45,7 +39,7 @@ sudo python3 -m src.main \
 Self Scan inspects your local machine's listening sockets. It does not require `--network`.
 
 ```bash
-sudo python3 -m src.main --scanType=SelfScan
+sudo python3 -m src.main --scanType=SS
 ```
 
 ## Confirm it worked
@@ -53,7 +47,9 @@ sudo python3 -m src.main --scanType=SelfScan
 You should see boxed sections such as:
 
 - **Scan Starting**
+![alt text](assets/images/scan_start.png)
 - **Self Scan Results** (runs as part of `--scanType=all`)
+![alt text](assets/images/self_scan.png)
 - **Host Scan (i/N)** per discovered host
 - **Network Scan Summary** (not printed in `SelfScan`-only mode)
 

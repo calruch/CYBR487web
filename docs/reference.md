@@ -15,17 +15,19 @@ python3 -m src.main [options]
 
 ## Command-line options
 
-| Option | Required? | Default | Notes |
+| Flag | Required | Default | Notes |
 |---|---:|---:|---|
-| `--network=<IPv4[/CIDR]>` | Yes (except `SelfScan`) | — | If no CIDR is provided, `/32` is assumed. Invalid values fail argument processing. |
-| `--ports=<spec>` | For `all` and `TCP` | — | Port specification must be a single string; see [Port specification](#port-specification). |
-| `--timeout=<seconds>` | No | `5` | Clamped/validated to an integer range (1–10). Out-of-range values fall back to default. |
-| `--scanType=<type>` | No | `all` | One of: `all`, `ICMP`, `TCP`, `TraceRouteTCP`, `TraceRouteICMP`, `SelfScan`. |
-| `--hostid=<type>` | No | `ARP` | One of: `ARP`, `ICMP`, `NONE`. `NONE` skips discovery and supports traceroute-only mode. |
-| `-m, --maxhops=<int>` | No | `30` | Traceroute hop limit (validated to 1–60). |
-| `-v, --verbose` | No | `false` | Enables additional status output and enables Scapy verbosity in some scanner components. |
-| `-vv, --moreverbose` | No | `false` | Parsed but currently unused. |
-| `-h, --help` | No | `false` | Parsed but currently does not display help text. |
+| `--network=<IPv4[/CIDR]>` | Yes (except `--scanType=SS`) | — | If no CIDR is provided, `/32` is assumed. |
+| `-t/--timeout=<seconds>` | No | `2` | Valid range: `1–300`. Controls packet response wait time. |
+| `-p/--ports=<ports>` | Yes for `all` and `PS` | — | Supports `22`, `22,80,443`, `1-1024` (inclusive). Spaces are not supported. |
+| `-v/--verbose` | No | Off | Extra status output. |
+| `-vv/--moreverbose` | No | Off | Enables verbose status output and increases Scapy verbosity for some operations. |
+| `--scanType=<type>` | No | `all` | One of: `all`, `OS`, `PS`, `TRTCP`, `TRICMP`, `SS`. |
+| `-s/--hostid=<ARP\|ICMP\|NONE>` | No | `ARP` | `NONE` is only valid with traceroute-only (`TRTCP`/`TRICMP`). |
+| `-m/--maxhops=<int>` | No | `30` | Valid range: `1–60`. Traceroute hop limit. |
+| `--file=<path>` | No | — | Whitelist/exclusion file: whitespace-separated IPs and/or CIDRs. Matching targets are skipped. |
+| `--workers=<int>` | No | `1` | **WIP: Non-functional** Valid range: `1–64`. Uses multiprocessing to scan multiple hosts concurrently. |
+| `-h/--help` | No | Off | Currently parsed but does not print a help screen (use docs as reference). |
 
 ### Port specification
 
@@ -52,11 +54,9 @@ Typical `all` scan output includes:
 
 ## Known limitations and gotchas
 
-- **`--scanType=all` requires `--ports`**. If omitted, the TCP port scanner raises an error.
 - **ARP host discovery is local-only**. ARP discovery generally does not work across routers/VLAN boundaries.
 - **TCP traceroute uses destination port 80**. Some networks/firewalls may block or rate-limit this path.
 - **ICMP traceroute printing may fail on timeouts**. Some timeout hops are recorded differently, which can cause traceroute printing to error when mixed with successful hops.
-- **Self Scan can collapse duplicates**. If multiple processes share the same name, only one entry may be retained in the current output map.
 - **No file export**. Output is printed; no JSON/CSV writer is implemented.
 
 ## Common errors
