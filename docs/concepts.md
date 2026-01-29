@@ -25,7 +25,7 @@ At runtime, the scanner follows this sequence:
 
 - `all`: runs Self Scan, OS heuristic, TCP port scan, and both traceroute modes.
 - `ICMP`: OS heuristic only (requires host discovery).
-- `TCP`: TCP port scan only (requires `--ports`).
+- `TCP`: TCP port scan only.
 - `TRTCP`: TCP traceroute (requires host discovery unless used with `--hostid=NONE`).
 - `TRICMP`: ICMP traceroute (requires host discovery unless used with `--hostid=NONE`).
 - `SS`: local-only self scan.

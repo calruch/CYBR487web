@@ -72,16 +72,6 @@ Fix: provide a valid IPv4 address or CIDR, for example:
 python3 -m src.main --network=192.168.1.0/24 --scanType=ICMP
 ```
 
-### `No ports given to scan`
-
-Cause: `--scanType` includes TCP port scanning (`all` or `TCP`) but `--ports` was omitted.
-
-Fix: supply ports:
-
-```bash
-python3 -m src.main --network=192.168.1.0/24 --ports=22,80,443 --scanType=TCP
-```
-
 ### `Invalid host identifier was given`
 
 Cause: `--hostid` must be `ARP`, `ICMP`, or `NONE` (case-sensitive).
@@ -89,5 +79,5 @@ Cause: `--hostid` must be `ARP`, `ICMP`, or `NONE` (case-sensitive).
 
 ### `Invalid scan type was given`
 
-Cause: `--scanType` must be one of: `all`, `ICMP`, `TCP`, `TraceRouteTCP`, `TraceRouteICMP`, `SelfScan`.
+Cause: `--scanType` must be one of: `all`, `OS`, `PS`, `TRTCP`, `TRICMP`, `SS`.
 
