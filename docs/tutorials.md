@@ -20,7 +20,7 @@ Start with a narrow CIDR (for example, a `/24`) so the output is easy to review.
 
 ### 2) Choose a port set
 
-If no ports are selected, defaults to ports 20, 21, 22, 23, 25, 53, 80, 110, 139, 143, 443, 445, 3306, 3389, 6969, 8000, and 8080 where required.
+If no ports are selected, the scanner defaults to the following ports where required: 20, 21, 22, 23, 25, 53, 80, 110, 139, 143, 443, 445, 3306, 3389, 6969, 8000, and 8080.
 
 Good starter list:
 
@@ -36,7 +36,7 @@ sudo python3 -m src.main \
   --hostid=ARP \
   --ports=22,80,443 \
   --timeout=5 \
-  --scanType=all \
+  --scanType=all
 ```
 
 ### 4) Read the output

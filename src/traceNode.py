@@ -1,112 +1,173 @@
 #! /bin/env python3
 
-class TraceNode:
+class Node:
     '''  
     name: TraceNode
     description: Class to represent a node in a traceroute path.
 
     '''
-    def __init__(self, nodeID, IPAddress, prevNode = None, nextNode = None):
+
+    def __init__(self, IPAddress, hop, ID , parent=None):
         '''  
         name: TraceNode
+        description: Initializes the TraceNode with node ID and IP address.
+        parameters: nodeID (int), IPAddress (string), prevNode (TraceNode), nextNode (TraceNode)
         '''
-        self.nodeID = nodeID
         self.IPAddress = IPAddress
-        self.services = [] # Port or service - placeholder for future use
+        self.hop = hop
+        self.ID = ID
+        self.services = []  # Port or service - placeholder for future use
+        self.children = []  # Placeholder for future use
+        self.childrenCount = 0  # Placeholder for future use
+        self.parent = parent
 
-        # Linking nodes
-        if prevNode is not None: self.prevNode = prevNode
-        else: self.prevNode = None
-        if nextNode is not None: self.nextNode = nextNode
-        else: self.nextNode = None
-    
-    def getNodeID(self):
-        '''  
-        name: getNodeID
-        description: Returns the node ID.
-        '''
-        return self.nodeID
-    
+
     def getIPAddress(self):
         '''  
         name: getIPAddress
         description: Returns the IP address of the node.
         '''
         return self.IPAddress
+
+    def getHop(self):
+        '''  
+        name: getHop
+        description: Returns the hop number of the node.
+        '''
+        return self.hop
     
-    def getPrevNode(self):
+    def getChildren(self):
         '''  
-        name: getPrevNode
-        description: Returns the previous node in the path.
+        name: getChildren
+        description: Returns the children of the node.
         '''
-        return self.prevNode
-    def getNextNode(self):
+        return self.children
+    
+    def addChild(self, childNode):
         '''  
-        name: getNextNode
-        description: Returns the next node in the path.
+        name: addChild
+        description: Adds a child Node to this node.
+        parameters: childNode (Node)
         '''
-        return self.nextNode
-    def setPrevNode(self, prevNode):
-        '''
-        name: setPrevNode
-        description: Sets the previous node in the path.
-        '''
-        self.prevNode = prevNode
+        self.children.append(childNode)
+        self.childrenCount += 1
+        childNode.setParent(self)
 
-    def setNextNode(self, nextNode):
+    def setParent(self, parentNode):
+        '''  
+        name: setParent
+        description: Sets the parent Node of this node.
+        parameters: parentNode (Node)
         '''
-        name: setNextNode
-        description: Sets the next node in the path.
-        '''
-        self.nextNode = nextNode
+        self.parent = parentNode
 
-class TracePath:
+    def getChildrenCount(self):
+        '''  
+        name: getChildrenCount
+        description: Returns the number of children of this node.
+        '''
+        return self.childrenCount
+    
+    def getID(self):
+        '''  
+        name: getID
+        description: Returns the ID of this node.
+        '''
+        return self.ID
+
+class TraceTree:
     '''  
-    name: TracePath
-    description: Class to represent a traceroute path consisting of multiple TraceNodes (linked list).
+    name: TraceTree
+    description: Class to represent a traceroute path consisting of multiple Nodes (linked list).
 
     '''
-    def __init__(self):
+
+    def __init__(self, startIP):
         '''  
-        name: TracePath
+        name: TraceTree
         '''
-        self.source = None
-        self.head = None
-        self.tail = None
-        self.length = 0
-    
-    def addNode(self, nodeID, IPAddress):
+        self.startIP = startIP
+        self.head = Node(startIP, 0, ID=0)
+        self.nodeCount = 1
+
+    def addNode(self, IPAddress, hop, parentNode):
         '''  
         name: addNode
-        description: Adds a new TraceNode to the path.
+        description: Adds a new Node to the TraceTree.
+        parameters: IPAddress (string), hop (int)
         '''
-        newNode = TraceNode(nodeID, IPAddress)
-        if self.head is None:
-            self.head = newNode
-            self.tail = newNode
-        else:
-            self.tail.setNextNode(newNode)
-            newNode.setPrevNode(self.tail)
-            self.tail = newNode
-    
-    def getPath(self):
-        '''  
-        name: getPath
-        description: Returns a list of IP addresses in the traceroute path.
-        '''
-        path = []
-        currentNode = self.head
-        while currentNode is not None:
-            path.append(currentNode.getIPAddress())
-            currentNode = currentNode.getNextNode()
-        return path
-    
-    def rotatePath(self, ipAddress):
-        '''  
-        name: rotatePath
-        description: Reverses the traceroute path to the specified IP.
-        '''
-        currentNode = self.head
-        prevNode = None
+        newNode = Node(IPAddress, hop, ID=self.nodeCount, parent=parentNode)
+        parentNode.addChild(newNode)
+        self.nodeCount += 1
+        return newNode
 
-        pass
+    def convertHopNode(self, hopList):
+        '''  
+        name: convertHopNode
+        description: Converts a list of [hop, IPAddress, timeTaken] into a TraceNode.
+        parameters: hopList (list)
+        '''
+        hop = hopList[0]
+        IPAddress = hopList[1]
+        newNode = Node(IPAddress, hop, ID=self.nodeCount)
+        return newNode
+    
+        
+    def findChildNode(self, parentNode, hop, current=None):
+        '''  
+        name : findChildNode
+        description: Finds a child node of the given parent node that matches the specified hop.
+        parameters: parentNode (Node), hop (list), current (Node)
+        returns: Node or None
+        '''
+        for child in parentNode.getChildren():
+            if child.getHop() == hop[0] and child.getIPAddress() == hop[1]:
+                return child
+        return None
+    
+    def convertListTree(self, traceList):
+        '''  
+        name: convertListTree
+        description: Converts a list of[ [ [hop, IPAddress, timeTaken] ] ]into a TraceTree linked list.
+        parameters: traceList (list)
+        '''
+
+        for trace in traceList: # each item is a traceroute result
+            if trace is None:
+                continue
+
+            current = self.head
+
+            for hop in trace: # each item is a hop [hop number, IP address, time taken]
+                hopNum = hop[0]
+                IPAddress = hop[1]
+                
+
+                existingNode = self.findChildNode(current, hop)
+                if existingNode is not None:
+                    current = existingNode
+                else:
+                    current = self.addNode(IPAddress, hopNum, current)
+        
+        return self.getTree()
+    
+    def getTree(self):
+        '''
+        name: getTree
+        description: Returns the head node of the TraceTree.
+        '''
+        return self.head
+    
+    def printTree(self, node=None):
+        '''
+        name: printTree
+        description: Prints the TraceTree starting from the given node.
+        parameters: node (TraceNode)
+        returns: none
+        '''
+        if node is None:
+            node = self.head
+        for child in node.getChildren():
+            self.printTree(child)
+
+

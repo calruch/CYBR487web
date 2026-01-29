@@ -47,11 +47,13 @@ sudo python3 -m src.main --scanType=SS
 You should see boxed sections such as:
 
 - **Scan Starting**
-![alt text](assets/images/scan_start.png)
+![Scan Start](assets/images/scan_start.png)
 - **Self Scan Results** (runs as part of `--scanType=all`)
-![alt text](assets/images/self_scan.png)
+![Self Scan](assets/images/self_scan.png)
 - **Host Scan (i/N)** per discovered host
+![Host Scan](assets/images/host_scan.png)
 - **Network Scan Summary** (not printed in `SelfScan`-only mode)
+![Scan Summary](assets/images/scan_summary.png)
 
 ## Next steps
 
