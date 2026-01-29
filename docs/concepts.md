@@ -8,7 +8,7 @@ At runtime, the scanner follows this sequence:
 
 1. Parse CLI arguments.
 2. Print a **Scan Starting** header (network, ports, timeout).
-3. If `--scanType` is `all` or `SelfScan`, run **Self Scan** first.
+3. If `--scanType` is `all` or `SS`, run **Self Scan** first.
 4. If host discovery is enabled (`--hostid=ARP` or `--hostid=ICMP`), build a list of target hosts.
 5. For each discovered host, run the selected scan modules (OS heuristic, port scan, traceroute) based on `--scanType`.
 6. Print per-host reports and a final **Network Scan Summary**.
@@ -26,9 +26,9 @@ At runtime, the scanner follows this sequence:
 - `all`: runs Self Scan, OS heuristic, TCP port scan, and both traceroute modes.
 - `ICMP`: OS heuristic only (requires host discovery).
 - `TCP`: TCP port scan only (requires `--ports`).
-- `TraceRouteTCP`: TCP traceroute (requires host discovery unless used with `--hostid=NONE`).
-- `TraceRouteICMP`: ICMP traceroute (requires host discovery unless used with `--hostid=NONE`).
-- `SelfScan`: local-only self scan.
+- `TRTCP`: TCP traceroute (requires host discovery unless used with `--hostid=NONE`).
+- `TRICMP`: ICMP traceroute (requires host discovery unless used with `--hostid=NONE`).
+- `SS`: local-only self scan.
 
 !!! note "Traceroute-only mode"
     When `--hostid=NONE`, the tool only runs traceroute for `TraceRouteTCP` and `TraceRouteICMP`, then exits early.

@@ -16,11 +16,11 @@ This tutorial runs:
 
 ### 1) Pick a small target range
 
-Start with a narrow CIDR (for example, a `/29`) so the output is easy to review.
+Start with a narrow CIDR (for example, a `/24`) so the output is easy to review.
 
 ### 2) Choose a port set
 
-For `--scanType=all`, you must provide `--ports`.
+If no ports are selected, defaults to ports 20, 21, 22, 23, 25, 53, 80, 110, 139, 143, 443, 445, 3306, 3389, 6969, 8000, and 8080 where required.
 
 Good starter list:
 
@@ -37,7 +37,6 @@ sudo python3 -m src.main \
   --ports=22,80,443 \
   --timeout=5 \
   --scanType=all \
-  -v
 ```
 
 ### 4) Read the output
@@ -58,7 +57,7 @@ If no hosts are discovered, see [Troubleshooting and limitations](reference.md#k
 Self Scan inspects your local machine's listening sockets and attempts to map them to process names.
 
 ```bash
-sudo python3 -m src.main --scanType=SelfScan
+sudo python3 -m src.main --scanType=SS
 ```
 
 ### What to expect
@@ -66,9 +65,6 @@ sudo python3 -m src.main --scanType=SelfScan
 - Output appears under **Self Scan Results**.
 - Only sockets in a "listening" state are considered.
 - Running without `sudo` can limit visibility into other users' processes.
-
-!!! note "Current limitation"
-    The Self Scan result map is keyed by process name. If multiple processes share the same name (for example, two `python3` servers on different ports), only one entry may be retained in the output.
 
 ## Tutorial: Traceroute-only (no host discovery)
 
@@ -79,7 +75,7 @@ sudo python3 -m src.main \
   --network=192.168.1.1/32 \
   --hostid=NONE \
   --maxhops=30 \
-  --scanType=TraceRouteTCP
+  --scanType=TRTCP
 ```
 
 Notes:
