@@ -54,6 +54,7 @@ Typical `all` scan output includes:
 
 ## Known limitations and gotchas
 
+- **Worker multiprocessing is malfunctioning**. It may crash or ruin scanner results if more than 1 worker is specified.
 - **ARP host discovery is local-only**. ARP discovery generally does not work across routers/VLAN boundaries.
 - **TCP traceroute uses destination port 80**. Some networks/firewalls may block or rate-limit this path.
 - **ICMP traceroute printing may fail on timeouts**. Some timeout hops are recorded differently, which can cause traceroute printing to error when mixed with successful hops.

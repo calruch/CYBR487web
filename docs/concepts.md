@@ -19,7 +19,7 @@ At runtime, the scanner follows this sequence:
 
 - `ARP`: ARP discovery on the local L2 segment.
 - `ICMP`: ICMP echo sweep across the provided CIDR.
-- `NONE`: skip discovery.
+- `NONE`: skip discovery (*for traceroute-only scans*)
 
 ### `--scanType`
 

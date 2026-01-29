@@ -14,23 +14,17 @@ class SelfScan:
             if not process_id.isdigit():
                 continue
             try:
-                # Process name
                 comm = open(f"/proc/{process_id}/comm").read().strip()
                 fd_dir = f"/proc/{process_id}/fd"
                 for fd in os.listdir(fd_dir):
                     try:
                         thing = os.readlink(f"{fd_dir}/{fd}")
                         if thing.startswith("socket:"):
-                            sockets.setdefault(comm, set()).add(
-                                thing.strip("socket:[]"))
+                            sockets.setdefault(comm, set()).add(thing[8:-1])
                     except OSError:
                         pass
             except OSError:
                 pass
-
-        # Prints all processes with sockets: For testing
-        # for name, s in sockets.items():
-        #    print(f"{name}{s}\n ")
 
         return sockets
 
@@ -94,9 +88,9 @@ class SelfScan:
         for name, s in sockets.items():
             for inode in s:
                 if inode in net:
-                    # 0A = TCP Listen, 07 = UDP Established
                     if net[inode][5] in ('0A', '07'):
-                        net_processes[name] = (
+                        key = f"{name}:{net[inode][2]}"
+                        net_processes[key] = (
                             net[inode][0], net[inode][1], net[inode][2], net[inode][3], net[inode][4])
 
         # Prints mapping of processes to network connections: For testing

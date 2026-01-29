@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
 import argparse
-import re
 import ipaddress
+import re
 
-DEFAULT_TIMEOUT_VALUE = 5
+DEFAULT_TIMEOUT_VALUE = 2
 DEFAULT_MIN_PORT = 1
 DEFAULT_MAX_PORT = 65535
 
@@ -53,10 +53,37 @@ class ParseClass:
             '--hostid', help='Choose the host identifier type[ARP, ICMP, NONE]', default="ARP")
         parser.add_argument(
             '-m', '--maxhops', help='Maximum number of hops for traceroute', default=30, type=int)
+        parser.add_argument('--scanType', choices=['all', 'OS', 'PS', 'TRTCP', 'TRICMP', 'SS'],
+                            help='Choose the scan type[all, OS(ICMP OS detection), PS (TCP port scanner), TRTCP (Traceroute TCP), TRICMP (Traceroute ICMP), SS (Self Scan)]', default="all")
         parser.add_argument(
-            '--scanType', help='Choose the scan type[all, ICMP, TCP, TraceRouteTCP, TraceRouteICMP, SelfScan]', default="all")
+            '--workers', help='Number of worker processes for parallel host scanning (default: 1)', default=1, type=int)
+        parser.add_argument('--file', help='Input file', default=None)
         args = vars(parser.parse_args())
         return args
+
+    def whitelistCreator(self, file):
+        ''' 
+        name: whitelistCreator
+        description: This function creates a whitelist set from the input file if provided.
+        parameters: file (string)
+        return: whitelist (set) or None
+        '''
+
+        whitelist = set()
+
+        if file is None:
+            whitelist = None
+        else:
+            try:
+                with open(file, 'r') as f:
+                    file = f.read().split()
+                    for line in file:
+                        curLine = line.strip()
+                        if curLine != '' and self.validateIPCIDR(curLine):
+                            whitelist.update(self.expandCIDR(curLine))
+            except Exception as e:
+                raise RuntimeError("Error reading input file: " + str(e))
+        return whitelist
 
     def parser(self, args):
         '''
@@ -66,16 +93,21 @@ class ParseClass:
         return: (tuple)
         '''
 
-        # Network parsing - may return None if invalid IP or CIDR given
+        # Whitelist file parsing - will return a set or None
+        whitelist = self.whitelistCreator(args['file'])
+
+        # Network parsing - may return None if invalid IP or CIDR given - ensure self scan is selected if no host is given
         ipList = self.parseNetwork(args['network'])
-        if ipList is None and args['scanType'] != 'SelfScan':
+        if ipList is None and args['scanType'] != 'SS':
             raise RuntimeError("No valid IPs were retrieved")
 
         # Port parsing - call the parsePorts function to get a list of all of the enumerated IP's
         if args['ports'] is not None:
             portList = self.parsePorts(args['ports'])
+            strport = args['ports']
         else:
             portList = None
+            strport = None
 
         # Timeout parsing
         if args['timeout'] is not None:
@@ -88,7 +120,7 @@ class ParseClass:
         else:
             timeoutVal = DEFAULT_TIMEOUT_VALUE
 
-        # Verbose parsing 
+        # Verbose parsing
         VerboseOption = args['verbose']
         MoreVerboseOption = args.get('moreverbose', False)
 
@@ -108,22 +140,28 @@ class ParseClass:
             raise RuntimeError("Invalid max hops value was given")
         maxHops = args['maxhops']
 
+        workers = int(args.get('workers', 1))
+        if workers < 1 or workers > 64:
+            raise RuntimeError('Invalid workers value was given')
+
         if args['scanType'] is None:
             raise RuntimeError("No scan type was given")
+
         # Scan type parsing:
         # option 1 - all, option 2 - ARP, option 3 - ICMP, option 4 - TCP, option 5 - TraceRouteTCP, option 6 - TraceRouteICMP, option 7 - self scan
+        # Returns tuple of: (0: ipList, 1: portList, 2: timeoutVal, 3: VerboseOption, 4: MoreVerboseOption, 5: scanType, 6: hostID, 7: maxHops, 8: strport, 9: whitelist, 10: workers)
         if (args['scanType'] == 'all'):
-            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 1, hostID, maxHops)
-        elif (args['scanType'] == 'ICMP'):
-            return (ipList, portList, timeoutVal, VerboseOption,  MoreVerboseOption, 2, hostID, maxHops)
-        elif (args['scanType'] == 'TCP'):
-            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 3, hostID, maxHops)
-        elif (args['scanType'] == 'TraceRouteTCP'):
-            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 4, hostID, maxHops)
-        elif (args['scanType'] == 'TraceRouteICMP'):
-            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 5, hostID, maxHops)
-        elif (args['scanType'] == 'SelfScan'):
-            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 6, hostID, maxHops)
+            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 1, hostID, maxHops, strport, whitelist, workers)
+        elif (args['scanType'] == 'OS'):
+            return (ipList, portList, timeoutVal, VerboseOption,  MoreVerboseOption, 2, hostID, maxHops, strport, whitelist, workers)
+        elif (args['scanType'] == 'PS'):
+            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 3, hostID, maxHops, strport, whitelist, workers)
+        elif (args['scanType'] == 'TRTCP'):
+            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 4, hostID, maxHops, strport, whitelist, workers)
+        elif (args['scanType'] == 'TRICMP'):
+            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 5, hostID, maxHops, strport, whitelist, workers)
+        elif (args['scanType'] == 'SS'):
+            return (ipList, portList, timeoutVal, VerboseOption, MoreVerboseOption, 6, hostID, maxHops, strport, whitelist, workers)
         else:
             raise RuntimeError("Invalid scan type was given")
 
@@ -162,6 +200,20 @@ class ParseClass:
         '''
         isValid = bool(re.fullmatch(r'(^(?:(?:10\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|(?:172\.(?:1[6-9]|2\d|3[01])\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|(?:192\.168\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))|(?:(?!10\.)(?!127\.)(?!169\.254\.)(?!192\.168\.)(?!172\.(?:1[6-9]|2\d|3[01])\.)(?:[1-9]\d?|1\d\d|2[0-1]\d|22[0-3])\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d))))(?:/(?:3[0-2]|[12]?\d))?$', network))
         return isValid
+
+    def expandCIDR(self, cidr):
+        '''
+        name: expandCIDR - not being used
+        description: This function expands a CIDR notation into a list of individual IP addresses, using the ipaddress module.
+        parameters: cidr (string)
+        return: ipList (list of IP addresses)
+        source: https://docs.python.org/3/howto/ipaddress.html
+        '''
+        ipList = []
+        ipRange = ipaddress.ip_network(cidr, strict=False)
+        for ip in ipRange:
+            ipList.append(str(ip))
+        return ipList
 
     def parseNetwork(self, network):
         '''

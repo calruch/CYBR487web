@@ -18,8 +18,7 @@ sudo python3 -m src.main \
   --hostid=ARP \
   --ports=22,80,443 \
   --timeout=5 \
-  --scanType=all \
-  -v
+  --scanType=all
 ```
 
 ### Prefer ICMP host discovery for routed networks
